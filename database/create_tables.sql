@@ -78,5 +78,32 @@ CREATE TABLE IF NOT EXISTS action_location(
   CONSTRAINT fk_action FOREIGN KEY (action_id) REFERENCES action(action_id),
   CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES location(location_id)); 
   
+  CREATE TABLE IF NOT EXISTS action_item(
+  action_id VARCHAR(45) NOT NULL,
+  item_id VARCHAR(45) NOT NULL,
+  PRIMARY KEY (action_id,item_id),
+  CONSTRAINT fk_action_item FOREIGN KEY (action_id) REFERENCES action(action_id),
+  CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES item(item_id)); 
   
+  CREATE TABLE IF NOT EXISTS action_action(
+  action_id VARCHAR(45) NOT NULL,
+  revealed_id VARCHAR(45) NOT NULL,
+  PRIMARY KEY (action_id,revealed_id),
+  CONSTRAINT fk_action_action FOREIGN KEY (action_id) REFERENCES action(action_id),
+  CONSTRAINT fk_revealed FOREIGN KEY (revealed_id) REFERENCES action(action_id)); 
+  
+  CREATE TABLE IF NOT EXISTS question(
+  question_id VARCHAR(45) NOT NULL,
+  case_id VARCHAR(45) NOT NULL,
+  text VARCHAR(400) NOT NULL,
+  PRIMARY KEY (question_id),
+  CONSTRAINT fk_case FOREIGN KEY (case_id) REFERENCES detective_case(case_id)); 
+  
+  CREATE TABLE IF NOT EXISTS answer(
+  answer_id VARCHAR(45) NOT NULL,
+  question_id VARCHAR(45) NOT NULL,
+  text VARCHAR(400) NOT NULL,
+  correct boolean,
+  PRIMARY KEY (question_id),
+  CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(question_id)); 
   
