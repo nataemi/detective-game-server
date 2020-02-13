@@ -2,27 +2,34 @@ CREATE SCHEMA IF NOT EXISTS detective;
 
 USE  detective;
 
-CREATE  TABLE IF NOT EXISTS users (
-  username VARCHAR(45) NOT NULL ,
-  password VARCHAR(45) NOT NULL ,
-  enabled TINYINT NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (username));
-  
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_users_username` (`username`),
+  UNIQUE KEY `uk_users_email` (`email`)
+);
+
 CREATE TABLE IF NOT EXISTS roles (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   name varchar(60) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uk_roles_name (name)
 );
-  
-  CREATE TABLE IF NOT EXISTS user_roles (
-  user_role_id int(11) NOT NULL AUTO_INCREMENT,
-  username varchar(45) NOT NULL,
-  role varchar(45) NOT NULL,
-  PRIMARY KEY (user_role_id),
-  UNIQUE KEY uni_username_role (role,username),
-  KEY fk_username_idx (username),
-  CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username));
+
+CREATE TABLE `user_roles` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_user_roles_role_id` (`role_id`),
+  CONSTRAINT `fk_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  CONSTRAINT `fk_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
   
   CREATE TABLE IF NOT EXISTS detective_case (
   case_id VARCHAR(45) NOT NULL,
@@ -116,3 +123,4 @@ CREATE TABLE IF NOT EXISTS action_location(
   
 INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
