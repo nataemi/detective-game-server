@@ -8,6 +8,13 @@ CREATE  TABLE IF NOT EXISTS users (
   enabled TINYINT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (username));
   
+CREATE TABLE IF NOT EXISTS roles (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  name varchar(60) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_roles_name (name)
+);
+  
   CREATE TABLE IF NOT EXISTS user_roles (
   user_role_id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(45) NOT NULL,
@@ -107,3 +114,5 @@ CREATE TABLE IF NOT EXISTS action_location(
   PRIMARY KEY (question_id),
   CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(question_id)); 
   
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
