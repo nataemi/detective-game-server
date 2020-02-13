@@ -1,6 +1,14 @@
+DROP TABLE answer;
+DROP TABLE question;
+DROP TABLE action_location;
+DROP TABLE action_item;
+DROP TABLE action_action;
+DROP TABLE action;
 DROP TABLE location_connection;
 DROP TABLE location;
-DROP TABLE detective_case;
 DROP TABLE save;
+DROP TABLE item;
+DROP TABLE detective_case;
 DROP TABLE user_roles;
 DROP TABLE users;
+DROP TABLE roles;
