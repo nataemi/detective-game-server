@@ -1,4 +1,4 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.login;
 
 import javax.validation.constraints.*;
 

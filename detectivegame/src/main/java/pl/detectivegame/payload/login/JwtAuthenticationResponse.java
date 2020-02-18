@@ -1,4 +1,4 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.login;
 
 public class JwtAuthenticationResponse {
     private String accessToken;

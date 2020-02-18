@@ -1,22 +1,19 @@
 package pl.detectivegame;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
-
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
         DetectiveGameApplication.class
 })
+@Slf4j
 public class DetectiveGameApplication {
-
-    private static final Logger log = LoggerFactory.getLogger(DetectiveGameApplication.class);
 
     @PostConstruct
     void init() {
