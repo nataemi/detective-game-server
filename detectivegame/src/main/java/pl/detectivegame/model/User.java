@@ -36,7 +36,7 @@ public class User extends DateAudit {
     private String name;
 
     @NotBlank
-    @Size(max = 15)
+    @Size(max = 15, min = 5)
     private String username;
 
     @NaturalId
