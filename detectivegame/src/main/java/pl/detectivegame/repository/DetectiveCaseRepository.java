@@ -12,13 +12,13 @@ import java.util.Optional;
 
 @Repository
 public interface DetectiveCaseRepository extends JpaRepository<DetectiveCase, Long> {
-    Optional<DetectiveCase> findById(Long pollId);
+    Optional<DetectiveCase> findById(Long caseId);
 
     Page<DetectiveCase> findByCreator(Long userId, Pageable pageable);
 
     long countByCreator(Long userId);
 
-    List<DetectiveCase> findByIdIn(List<Long> pollIds);
+    List<DetectiveCase> findByIdIn(List<Long> caseIds);
 
-    List<DetectiveCase> findByIdIn(List<Long> pollIds, Sort sort);
+    List<DetectiveCase> findByIdIn(List<Long> caseIds, Sort sort);
 }

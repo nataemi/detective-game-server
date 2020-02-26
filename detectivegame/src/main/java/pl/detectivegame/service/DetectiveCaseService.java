@@ -10,7 +10,6 @@ import pl.detectivegame.payload.DetectiveCaseRequest;
 import pl.detectivegame.payload.DetectiveCaseResponse;
 import pl.detectivegame.repository.DetectiveCaseRepository;
 import pl.detectivegame.repository.UserRepository;
-import pl.detectivegame.security.UserPrincipal;
 import pl.detectivegame.util.DetectiveCaseMapper;
 
 
@@ -24,29 +23,30 @@ public class DetectiveCaseService {
     @Autowired
     private UserRepository userRepository;
 
-    public DetectiveCase createDetectiveCase(DetectiveCaseRequest detectiveCaseRequest) {
+    public DetectiveCaseResponse createDetectiveCase(DetectiveCaseRequest detectiveCaseRequest) {
         DetectiveCase detectiveCase =
                 DetectiveCase.builder()
+                        .id(detectiveCaseRequest.getId())
                         .image(detectiveCaseRequest.getImage())
                         .name(detectiveCaseRequest.getName())
                         .time(detectiveCaseRequest.getTime())
                         .description(detectiveCaseRequest.getDescription())
                         .ready(detectiveCaseRequest.isReady())
                         .build();
-
-        return detectiveCaseRepository.save(detectiveCase);
+        detectiveCase = detectiveCaseRepository.save(detectiveCase);
+        User creator = getCreator(detectiveCase);
+        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCase, creator);
     }
 
-    public DetectiveCaseResponse getDetectiveCaseById(Long detectiveCaseId, UserPrincipal currentUser) {
+    public DetectiveCaseResponse getDetectiveCaseById(Long detectiveCaseId) {
         DetectiveCase detectiveCase = detectiveCaseRepository.findById(detectiveCaseId).orElseThrow(
-                () -> new ResourceNotFoundException("Poll", "id", detectiveCaseId));
+                () -> new ResourceNotFoundException("Case", "id", detectiveCaseId));
+        User creator = getCreator(detectiveCase);
+        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCase, creator);
+    }
 
-
-        // Retrieve poll creator details
-        User creator = userRepository.findById(detectiveCase.getCreator())
+    private User getCreator(DetectiveCase detectiveCase) {
+        return userRepository.findById(detectiveCase.getCreator())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", detectiveCase.getCreator()));
-
-
-        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseRespone(detectiveCase, creator);
     }
 }

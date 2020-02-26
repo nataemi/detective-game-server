@@ -7,7 +7,7 @@ import pl.detectivegame.payload.UserSummary;
 
 public class DetectiveCaseMapper {
 
-    public static DetectiveCaseResponse mapDetectiveCasetoDetectiveCaseRespone(DetectiveCase detectiveCase, User creator){
+    public static DetectiveCaseResponse mapDetectiveCasetoDetectiveCaseResponse(DetectiveCase detectiveCase, User creator){
         DetectiveCaseResponse detectiveCaseResponse =
                 DetectiveCaseResponse.builder()
                     .createdBy(UserSummary.builder()

@@ -1,13 +1,11 @@
 package pl.detectivegame.payload;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.Instant;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class DetectiveCaseResponse {
     private Long id;

@@ -1,9 +1,6 @@
 package pl.detectivegame.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import pl.detectivegame.model.Audit.UserDateAudit;
 
 import javax.persistence.*;
@@ -13,9 +10,9 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "detective_case")
 @Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@ToString
 public class DetectiveCase extends UserDateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
