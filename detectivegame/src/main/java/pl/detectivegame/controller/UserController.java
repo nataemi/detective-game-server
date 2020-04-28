@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.detectivegame.exception.ResourceNotFoundException;
-import pl.detectivegame.model.DetectiveCase;
 import pl.detectivegame.model.User;
-import pl.detectivegame.payload.DetectiveCaseResponse;
 import pl.detectivegame.payload.UserProfile;
 import pl.detectivegame.payload.UserSummary;
-import pl.detectivegame.repository.DetectiveCaseRepository;
+import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.security.CurrentUser;
 import pl.detectivegame.security.UserPrincipal;
@@ -28,7 +26,7 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
-    DetectiveCaseRepository detectiveCaseRepository;
+    DetectiveCaseInfoRepository detectiveCaseInfoRepository;
 
     @Autowired
     DetectiveCaseService detectiveCaseService;
@@ -50,7 +48,7 @@ public class UserController {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        long caseCount = detectiveCaseRepository.countByCreator(user.getId());
+        long caseCount = detectiveCaseInfoRepository.countByCreator(user.getId());
 
         UserProfile userProfile =
                 UserProfile.builder()
@@ -65,7 +63,7 @@ public class UserController {
 
     //TODO
 //    @GetMapping("/users/{username}/detectiveCases")
-//    public PagedResponse<DetectiveCaseResponse> getPollsCreatedBy(@PathVariable(value = "username") String username,
+//    public PagedResponse<DetectiveCaseInfoResponse> getPollsCreatedBy(@PathVariable(value = "username") String username,
 //                                                                  @CurrentUser UserPrincipal currentUser,
 //                                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
 //                                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {

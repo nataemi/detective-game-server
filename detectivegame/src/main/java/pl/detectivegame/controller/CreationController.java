@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.detectivegame.payload.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.DetectiveCaseRequest;
-import pl.detectivegame.payload.DetectiveCaseResponse;
-import pl.detectivegame.repository.DetectiveCaseRepository;
+import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
 
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class CreationController {
 
     @Autowired
-    DetectiveCaseRepository detectiveCaseRepository;
+    DetectiveCaseInfoRepository detectiveCaseInfoRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -29,8 +29,8 @@ public class CreationController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/createDetectiveCase")
-    public DetectiveCaseResponse createDetectiveCase(@Valid @RequestBody DetectiveCaseRequest detectiveCaseRequest) {
-        DetectiveCaseResponse detectiveCase = detectiveCaseService.createDetectiveCase(detectiveCaseRequest);
+    public DetectiveCaseInfoResponse createDetectiveCase(@Valid @RequestBody DetectiveCaseRequest detectiveCaseRequest) {
+        DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.createDetectiveCase(detectiveCaseRequest);
         return detectiveCase;
     }
 }

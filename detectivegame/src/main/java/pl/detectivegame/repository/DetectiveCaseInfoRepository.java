@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DetectiveCaseRepository extends JpaRepository<DetectiveCase, Long> {
+public interface DetectiveCaseInfoRepository extends JpaRepository<DetectiveCase, Long> {
     Optional<DetectiveCase> findById(Long caseId);
 
     Page<DetectiveCase> findByCreator(Long userId, Pageable pageable);

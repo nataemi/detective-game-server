@@ -2,14 +2,14 @@ package pl.detectivegame.util;
 
 import pl.detectivegame.model.DetectiveCase;
 import pl.detectivegame.model.User;
-import pl.detectivegame.payload.DetectiveCaseResponse;
+import pl.detectivegame.payload.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.UserSummary;
 
 public class DetectiveCaseMapper {
 
-    public static DetectiveCaseResponse mapDetectiveCasetoDetectiveCaseResponse(DetectiveCase detectiveCase, User creator){
-        DetectiveCaseResponse detectiveCaseResponse =
-                DetectiveCaseResponse.builder()
+    public static DetectiveCaseInfoResponse mapDetectiveCasetoDetectiveCaseResponse(DetectiveCase detectiveCase, User creator){
+        DetectiveCaseInfoResponse detectiveCaseInfoResponse =
+                DetectiveCaseInfoResponse.builder()
                     .createdBy(UserSummary.builder()
                             .id(creator.getId())
                             .name(creator.getUsername())
@@ -22,6 +22,6 @@ public class DetectiveCaseMapper {
                     .time(detectiveCase.getTime())
                     .id(detectiveCase.getId())
                     .build();
-        return detectiveCaseResponse;
+        return detectiveCaseInfoResponse;
     }
 }

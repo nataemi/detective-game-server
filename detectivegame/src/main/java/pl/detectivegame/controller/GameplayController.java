@@ -1,12 +1,16 @@
 package pl.detectivegame.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.detectivegame.payload.DetectiveCaseResponse;
-import pl.detectivegame.repository.DetectiveCaseRepository;
+import pl.detectivegame.payload.*;
+import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
+
 
 @RestController
 @RequestMapping("/api/play")
@@ -14,7 +18,7 @@ import pl.detectivegame.service.DetectiveCaseService;
 public class GameplayController {
 
     @Autowired
-    DetectiveCaseRepository detectiveCaseRepository;
+    DetectiveCaseInfoRepository detectiveCaseInfoRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -23,7 +27,29 @@ public class GameplayController {
     DetectiveCaseService detectiveCaseService;
 
     @GetMapping("/getDetectiveCaseInfoById/{detectiveCaseId}")
-    public DetectiveCaseResponse getDetectiveCaseInfoById(@PathVariable Long detectiveCaseId) {
-        return detectiveCaseService.getDetectiveCaseById(detectiveCaseId);
+    public DetectiveCaseInfoResponse getDetectiveCaseInfoById(@PathVariable Long detectiveCaseId) {
+        return detectiveCaseService.getDetectiveCaseInfoById(detectiveCaseId);
+    }
+
+    @GetMapping("/getNewDetectiveCaseById/{detectiveCaseId}")
+    public DetectiveCaseResponse getDetectiveCaseById(@PathVariable Long detectiveCaseId) {
+        return detectiveCaseService.getNewDetectiveCaseById(detectiveCaseId);
+    }
+
+    @RequestMapping(value = "/saveDetectiveCase", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<SaveDetectiveCaseResponse> saveDetectiveCase(@RequestBody String saveDetectiveCaseRequest) {
+        Gson gson = new Gson();
+        JsonObject jsonSaveDetectiveCaseRequest = gson.fromJson(saveDetectiveCaseRequest, JsonObject.class);
+        ResponseEntity<SaveDetectiveCaseResponse> save = detectiveCaseService.saveDetectiveCase(jsonSaveDetectiveCaseRequest);
+        return save;
+    }
+
+    @RequestMapping(value = "/getDetectiveCaseSave", method = RequestMethod.POST)
+    public
+    DetectiveCaseSaveResponse getDetectiveCaseSave(@RequestBody DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
+        DetectiveCaseSaveResponse save = detectiveCaseService.getDetectiveCaseSave(saveDetectiveCaseRequest);
+        return save;
     }
 }
