@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.detectivegame.payload.*;
+import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
@@ -49,8 +49,7 @@ public class GameplayController {
     }
 
     @RequestMapping(value = "/getDetectiveCaseSave", method = RequestMethod.POST)
-    public
-    DetectiveCaseSaveResponse getDetectiveCaseSave(@Valid @RequestBody DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
+    public DetectiveCaseSaveResponse getDetectiveCaseSave(@Valid @RequestBody DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
         DetectiveCaseSaveResponse save = detectiveCaseService.getDetectiveCaseSave(saveDetectiveCaseRequest);
         return save;
     }

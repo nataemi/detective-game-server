@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.detectivegame.exception.ResourceNotFoundException;
 import pl.detectivegame.model.User;
-import pl.detectivegame.payload.UserProfile;
-import pl.detectivegame.payload.UserSummary;
+import pl.detectivegame.payload.user.UserProfileResponse;
+import pl.detectivegame.payload.user.UserSummaryResponse;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.security.CurrentUser;
@@ -33,32 +33,32 @@ public class UserController {
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummary userSummary =
-                UserSummary.builder()
+    public UserSummaryResponse getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        UserSummaryResponse userSummaryResponse =
+                UserSummaryResponse.builder()
                         .id(currentUser.getId())
                         .username(currentUser.getUsername())
                         .name(currentUser.getName())
                         .build();
-        return userSummary;
+        return userSummaryResponse;
     }
 
     @GetMapping("/users/{username}")
-    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+    public UserProfileResponse getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
         long caseCount = detectiveCaseInfoRepository.countByCreator(user.getId());
 
-        UserProfile userProfile =
-                UserProfile.builder()
+        UserProfileResponse userProfileResponse =
+                UserProfileResponse.builder()
                     .id(user.getId())
                     .username(user.getUsername())
                     .joinedAt(user.getCreated())
                     .detectiveCaseCount(caseCount)
                     .build();
 
-        return userProfile;
+        return userProfileResponse;
     }
 
     //TODO

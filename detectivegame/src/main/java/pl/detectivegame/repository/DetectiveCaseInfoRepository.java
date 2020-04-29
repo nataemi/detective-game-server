@@ -5,20 +5,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.detectivegame.model.DetectiveCase;
+import pl.detectivegame.model.DetectiveCaseInfo;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DetectiveCaseInfoRepository extends JpaRepository<DetectiveCase, Long> {
-    Optional<DetectiveCase> findById(Long caseId);
+public interface DetectiveCaseInfoRepository extends JpaRepository<DetectiveCaseInfo, Long> {
+    Optional<DetectiveCaseInfo> findById(Long caseId);
 
-    Page<DetectiveCase> findByCreator(Long userId, Pageable pageable);
+    Page<DetectiveCaseInfo> findByCreator(Long userId, Pageable pageable);
 
     long countByCreator(Long userId);
 
-    List<DetectiveCase> findByIdIn(List<Long> caseIds);
+    List<DetectiveCaseInfo> findByIdIn(List<Long> caseIds);
 
-    List<DetectiveCase> findByIdIn(List<Long> caseIds, Sort sort);
+    List<DetectiveCaseInfo> findByIdIn(List<Long> caseIds, Sort sort);
 }

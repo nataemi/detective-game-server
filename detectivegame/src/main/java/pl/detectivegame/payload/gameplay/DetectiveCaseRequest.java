@@ -1,4 +1,4 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.gameplay;
 
 import lombok.Getter;
 

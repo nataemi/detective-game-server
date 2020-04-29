@@ -1,6 +1,11 @@
 package pl.detectivegame.model;
 
-import lombok.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import pl.detectivegame.model.Audit.UserDateAudit;
 
 import javax.persistence.*;
@@ -13,7 +18,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DetectiveCase extends UserDateAudit {
+public class DetectiveCaseInfoWithCreatorName extends UserDateAudit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,4 +38,16 @@ public class DetectiveCase extends UserDateAudit {
     private boolean ready;
 
     private int time;
+
+    @ManyToOne
+    @JoinColumn(name="creator", nullable=false, insertable = false, updatable = false)
+    @JsonIgnore
+    User user;
+
+    private String username;
+
+    @Transient
+    public String getUsername(){
+        return getUser().getUsername();
+    };
 }

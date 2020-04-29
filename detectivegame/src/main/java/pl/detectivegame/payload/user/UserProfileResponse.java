@@ -1,16 +1,20 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
-public class UserSummary {
+@Builder
+public class UserProfileResponse {
     private Long id;
     private String username;
     private String name;
+    private Instant joinedAt;
+    private Long detectiveCaseCount;
 }

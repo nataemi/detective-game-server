@@ -1,4 +1,4 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

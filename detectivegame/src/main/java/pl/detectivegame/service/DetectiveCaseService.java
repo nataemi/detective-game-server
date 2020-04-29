@@ -6,16 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.detectivegame.exception.ResourceNotFoundException;
-import pl.detectivegame.model.DetectiveCase;
+import pl.detectivegame.model.DetectiveCaseInfo;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreatorName;
 import pl.detectivegame.model.Save;
 import pl.detectivegame.model.User;
-import pl.detectivegame.payload.*;
+import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
+import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
+import pl.detectivegame.repository.DetectiveCaseWithCreatorNameRepository;
 import pl.detectivegame.repository.SaveRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.util.DetectiveCaseMapper;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -32,9 +36,12 @@ public class DetectiveCaseService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private DetectiveCaseWithCreatorNameRepository detectiveCaseWithCreatorNameRepository;
+
     public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseRequest detectiveCaseRequest) {
-        DetectiveCase detectiveCase =
-                DetectiveCase.builder()
+        DetectiveCaseInfo detectiveCaseInfo =
+                DetectiveCaseInfo.builder()
                         .id(detectiveCaseRequest.getId())
                         .image(detectiveCaseRequest.getImage())
                         .name(detectiveCaseRequest.getName())
@@ -42,21 +49,21 @@ public class DetectiveCaseService {
                         .description(detectiveCaseRequest.getDescription())
                         .ready(detectiveCaseRequest.isReady())
                         .build();
-        detectiveCase = detectiveCaseInfoRepository.save(detectiveCase);
-        User creator = getCreator(detectiveCase);
-        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCase, creator);
+        detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
+        User creator = getCreator(detectiveCaseInfo);
+        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
     }
 
     public DetectiveCaseInfoResponse getDetectiveCaseInfoById(Long detectiveCaseId) {
-        DetectiveCase detectiveCase = detectiveCaseInfoRepository.findById(detectiveCaseId).orElseThrow(
+        DetectiveCaseInfo detectiveCaseInfo = detectiveCaseInfoRepository.findById(detectiveCaseId).orElseThrow(
                 () -> new ResourceNotFoundException("Case", "id", detectiveCaseId));
-        User creator = getCreator(detectiveCase);
-        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCase, creator);
+        User creator = getCreator(detectiveCaseInfo);
+        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
     }
 
-    private User getCreator(DetectiveCase detectiveCase) {
-        return userRepository.findById(detectiveCase.getCreator())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", detectiveCase.getCreator()));
+    private User getCreator(DetectiveCaseInfo detectiveCaseInfo) {
+        return userRepository.findById(detectiveCaseInfo.getCreator())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", detectiveCaseInfo.getCreator()));
     }
 
     public DetectiveCaseResponse getNewDetectiveCaseById(Long detectiveCaseId) {
@@ -98,5 +105,10 @@ public class DetectiveCaseService {
 
         Optional<Save> save = saveRepository.findFirstByPlayerAndCaseIdOrderByLastModifiedDesc(saveDetectiveCaseRequest.getUserId(),saveDetectiveCaseRequest.getCaseId());
         return DetectiveCaseSaveResponse.builder().jsonSave(save.map(o -> save.get().getSave_json()).orElse(null)).build();
+    }
+
+    public AllDetectiveCasesResponse getAllDetectiveCases() {
+        List<DetectiveCaseInfoWithCreatorName> saves = detectiveCaseWithCreatorNameRepository.findAll();
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
     }
 }

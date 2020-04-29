@@ -1,7 +1,8 @@
-package pl.detectivegame.payload;
+package pl.detectivegame.payload.gameplay;
 
 import lombok.Builder;
 import lombok.Data;
+import pl.detectivegame.payload.user.UserSummaryResponse;
 
 import java.time.Instant;
 
@@ -14,6 +15,6 @@ public class DetectiveCaseInfoResponse {
     private String image;
     private boolean ready;
     private int time;
-    private UserSummary createdBy;
+    private UserSummaryResponse createdBy;
     private Instant creationDateTime;
 }
