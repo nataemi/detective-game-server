@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DetectiveCaseInfoWithCreatorName extends UserDateAudit {
+public class DetectiveCaseInfoWithCreator extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,7 @@ package pl.detectivegame.payload.dashboard;
 
 import lombok.Builder;
 import lombok.Data;
-import pl.detectivegame.model.DetectiveCaseInfoWithCreatorName;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 @Data
 public class AllDetectiveCasesResponse {
 
-    List<DetectiveCaseInfoWithCreatorName> detectiveCaseList;
+    List<DetectiveCaseInfoWithCreator> detectiveCaseList;
 }

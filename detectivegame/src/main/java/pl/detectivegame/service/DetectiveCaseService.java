@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.detectivegame.exception.ResourceNotFoundException;
 import pl.detectivegame.model.DetectiveCaseInfo;
-import pl.detectivegame.model.DetectiveCaseInfoWithCreatorName;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.model.Save;
 import pl.detectivegame.model.User;
 import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
@@ -108,7 +108,7 @@ public class DetectiveCaseService {
     }
 
     public AllDetectiveCasesResponse getAllDetectiveCases() {
-        List<DetectiveCaseInfoWithCreatorName> saves = detectiveCaseWithCreatorNameRepository.findAll();
+        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findAll();
         return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
     }
 }
