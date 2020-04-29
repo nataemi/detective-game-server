@@ -40,17 +40,6 @@ public class UserController {
     @Autowired
     private DetectiveCaseWithCreatorNameRepository detectiveCaseWithCreatorNameRepository;
 
-    @GetMapping("/user/me")
-    @PreAuthorize("hasRole('USER')")
-    public UserSummaryResponse getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummaryResponse userSummaryResponse =
-                UserSummaryResponse.builder()
-                        .id(currentUser.getId())
-                        .username(currentUser.getUsername())
-                        .name(currentUser.getName())
-                        .build();
-        return userSummaryResponse;
-    }
 
     @GetMapping("/{username}")
     public UserProfileResponse getUserProfile(@PathVariable(value = "username") String username) {
