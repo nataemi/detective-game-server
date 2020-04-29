@@ -8,17 +8,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.detectivegame.exception.ResourceNotFoundException;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.model.User;
+import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.user.UserProfileResponse;
 import pl.detectivegame.payload.user.UserSummaryResponse;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
+import pl.detectivegame.repository.DetectiveCaseWithCreatorNameRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.security.CurrentUser;
 import pl.detectivegame.security.UserPrincipal;
 import pl.detectivegame.service.DetectiveCaseService;
 
+import java.util.Collections;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @Slf4j
 public class UserController {
 
@@ -30,6 +36,9 @@ public class UserController {
 
     @Autowired
     DetectiveCaseService detectiveCaseService;
+
+    @Autowired
+    private DetectiveCaseWithCreatorNameRepository detectiveCaseWithCreatorNameRepository;
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
@@ -43,7 +52,7 @@ public class UserController {
         return userSummaryResponse;
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/{username}")
     public UserProfileResponse getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -61,13 +70,17 @@ public class UserController {
         return userProfileResponse;
     }
 
-    //TODO
-//    @GetMapping("/users/{username}/detectiveCases")
-//    public PagedResponse<DetectiveCaseInfoResponse> getPollsCreatedBy(@PathVariable(value = "username") String username,
-//                                                                  @CurrentUser UserPrincipal currentUser,
-//                                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-//                                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-//        return pollService.getPollsCreatedBy(username, currentUser, page, size);
-//    }
+    @GetMapping("/createdDetectiveCases/{userId}")
+    public AllDetectiveCasesResponse getAllCreatedDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
+        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findByCreator(userId);
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
+    }
+
+    @GetMapping("/activeDetectiveCases/{userId}")
+    public AllDetectiveCasesResponse getAllActiveDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
+        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findByUserId(userId);
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
+    }
+
 
 }

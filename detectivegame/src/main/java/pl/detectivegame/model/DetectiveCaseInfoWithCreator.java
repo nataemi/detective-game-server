@@ -18,6 +18,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@NamedNativeQuery(name = "DetectiveCaseInfoWithCreator.findByUserId",
+        query = "SELECT d.id, d.created, d.modified, d.creator, d.description, d.image, d.name, d.ready, d.time, u.username FROM DETECTIVE_CASE D  JOIN USERS U on D.creator = U.id WHERE D.ID IN (SELECT CASE_ID FROM SAVE WHERE PLAYER = :userId);",
+        resultClass = DetectiveCaseInfoWithCreator.class)
 public class DetectiveCaseInfoWithCreator extends UserDateAudit {
 
     @Id
