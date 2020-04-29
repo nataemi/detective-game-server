@@ -67,10 +67,18 @@ public class DetectiveCaseService {
 
     public ResponseEntity<SaveDetectiveCaseResponse> saveDetectiveCase(JsonObject saveDetectiveCaseRequest) {
 
-        //TODO obsluga wyjatkow
-        String caseId = saveDetectiveCaseRequest.get("caseId").toString();
-        String player  = saveDetectiveCaseRequest.get("playerId").toString();
-        String saveJson = saveDetectiveCaseRequest.get("saveJson").toString();
+        String caseId;
+        String player;
+        String saveJson;
+        try {
+             caseId = saveDetectiveCaseRequest.get("caseId").toString();
+             player = saveDetectiveCaseRequest.get("playerId").toString();
+             saveJson = saveDetectiveCaseRequest.get("saveJson").toString();
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Incorrect Request format or value");
+        }
+
 
         Save save = Save.builder()
                 .caseId(Long.parseLong(caseId))
@@ -89,6 +97,6 @@ public class DetectiveCaseService {
     public DetectiveCaseSaveResponse getDetectiveCaseSave(DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
 
         Optional<Save> save = saveRepository.findFirstByPlayerAndCaseIdOrderByLastModifiedDesc(saveDetectiveCaseRequest.getUserId(),saveDetectiveCaseRequest.getCaseId());
-        return DetectiveCaseSaveResponse.builder().jsonSave(save.get().getSave_json()).build();
+        return DetectiveCaseSaveResponse.builder().jsonSave(save.map(o -> save.get().getSave_json()).orElse(null)).build();
     }
 }

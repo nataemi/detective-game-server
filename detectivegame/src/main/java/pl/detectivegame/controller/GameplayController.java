@@ -11,6 +11,8 @@ import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/play")
@@ -48,7 +50,7 @@ public class GameplayController {
 
     @RequestMapping(value = "/getDetectiveCaseSave", method = RequestMethod.POST)
     public
-    DetectiveCaseSaveResponse getDetectiveCaseSave(@RequestBody DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
+    DetectiveCaseSaveResponse getDetectiveCaseSave(@Valid @RequestBody DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
         DetectiveCaseSaveResponse save = detectiveCaseService.getDetectiveCaseSave(saveDetectiveCaseRequest);
         return save;
     }
