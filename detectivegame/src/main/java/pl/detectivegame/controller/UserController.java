@@ -2,25 +2,20 @@ package pl.detectivegame.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.detectivegame.exception.ResourceNotFoundException;
-import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
-import pl.detectivegame.model.User;
+import pl.detectivegame.model.DAO.DetectiveCaseInfoWithCreator;
+import pl.detectivegame.model.DAO.User;
 import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.user.UserProfileResponse;
-import pl.detectivegame.payload.user.UserSummaryResponse;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.DetectiveCaseWithCreatorNameRepository;
 import pl.detectivegame.repository.UserRepository;
-import pl.detectivegame.security.CurrentUser;
-import pl.detectivegame.security.UserPrincipal;
 import pl.detectivegame.service.DetectiveCaseService;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController

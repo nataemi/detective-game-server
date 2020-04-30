@@ -1,7 +1,7 @@
 package pl.detectivegame.payload.login;
 
 import lombok.Data;
-import pl.detectivegame.model.User;
+import pl.detectivegame.model.DAO.User;
 
 import java.util.Optional;
 

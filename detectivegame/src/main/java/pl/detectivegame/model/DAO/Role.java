@@ -1,9 +1,11 @@
-package pl.detectivegame.model;
+package pl.detectivegame.model.DAO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
+import pl.detectivegame.model.RoleName;
+
 import javax.persistence.*;
 
 @Entity

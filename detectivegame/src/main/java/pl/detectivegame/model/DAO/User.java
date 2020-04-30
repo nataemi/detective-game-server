@@ -1,4 +1,4 @@
-package pl.detectivegame.model;
+package pl.detectivegame.model.DAO;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 import pl.detectivegame.model.Audit.DateAudit;
+import pl.detectivegame.model.DAO.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

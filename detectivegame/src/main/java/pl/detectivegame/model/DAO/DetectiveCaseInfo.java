@@ -1,4 +1,4 @@
-package pl.detectivegame.model;
+package pl.detectivegame.model.DAO;
 
 import lombok.*;
 import pl.detectivegame.model.Audit.UserDateAudit;
@@ -6,6 +6,8 @@ import pl.detectivegame.model.Audit.UserDateAudit;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "detective_case")
@@ -32,4 +34,9 @@ public class DetectiveCaseInfo extends UserDateAudit {
     private boolean ready;
 
     private int time;
+
+    private long frstActionId;
+
+    @Column(name = "bgn_date", nullable = false)
+    private Timestamp bgnDate;
 }

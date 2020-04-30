@@ -1,4 +1,4 @@
-package pl.detectivegame.model;
+package pl.detectivegame.model.DAO;
 
 import lombok.*;
 

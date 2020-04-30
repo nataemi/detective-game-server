@@ -1,4 +1,4 @@
-package pl.detectivegame.model;
+package pl.detectivegame.model.DAO;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
