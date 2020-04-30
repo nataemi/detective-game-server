@@ -52,6 +52,9 @@ public class DetectiveCaseService {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    QuestionRepository questionRepository;
+
     public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseRequest detectiveCaseRequest) {
         DetectiveCaseInfo detectiveCaseInfo =
                 DetectiveCaseInfo.builder()
@@ -87,8 +90,8 @@ public class DetectiveCaseService {
         List<LocationConnection> locationConnections = locationConnectionRepository.
                 findAllByLocationConnectionIdentity_FromIdIn(locations.stream().map(Location::getLocationId).collect(Collectors.toList()));
         List<LocationConnectionWithName> paths = LocationConnectionResponseMapper.map(locationConnections, locations);
+        List<Question> test = questionRepository.findByCaseId(detectiveCaseId);
         List<Item> allItems = itemRepository.findAllInCase(detectiveCaseId);
-
         List<pl.detectivegame.model.Item> items = getItems(allItems);
         List<Person> people = getPeople(allItems);
 
@@ -104,6 +107,7 @@ public class DetectiveCaseService {
                                 .paths(paths)
                                 .items(items)
                                 .people(people)
+                                .test(test)
                                 .build()).build();
         return detectiveCaseResponse;
     }

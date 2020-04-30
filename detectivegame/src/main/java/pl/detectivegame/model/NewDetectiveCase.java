@@ -2,9 +2,9 @@ package pl.detectivegame.model;
 
 import lombok.Builder;
 import lombok.Data;
-import pl.detectivegame.model.Action;
 
 import pl.detectivegame.model.DAO.Location;
+import pl.detectivegame.model.DAO.Question;
 
 import java.util.Date;
 import java.util.List;
@@ -22,4 +22,5 @@ public class NewDetectiveCase {
     List<Item> items;
     List<LocationConnectionWithName> paths;
     List<Person> people;
+    List<Question> test;
 }
