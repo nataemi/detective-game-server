@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS action_location(
 INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
-ALTER TABLE location ADD COLUMN isStart boolean;
+ALTER TABLE location ADD COLUMN is_Start boolean;
 ALTER TABLE detective_case ADD COLUMN bgnDate timestamp DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE action ADD COLUMN case_id bigint(20) NOT NULL;
 ALTER TABLE action ADD CONSTRAINT fk_case_action FOREIGN KEY (case_id) REFERENCES detective_case(id);
