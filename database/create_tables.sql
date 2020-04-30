@@ -113,18 +113,19 @@ CREATE TABLE IF NOT EXISTS action_location(
   CREATE TABLE IF NOT EXISTS question(
   question_id bigint(20) NOT NULL AUTO_INCREMENT,
   case_id bigint(20) NOT NULL,
-  text VARCHAR(400) NOT NULL,
+  content VARCHAR(400) NOT NULL,
   PRIMARY KEY (question_id),
   CONSTRAINT fk_case FOREIGN KEY (case_id) REFERENCES detective_case(id)); 
   
   CREATE TABLE IF NOT EXISTS answer(
   answer_id bigint(20) NOT NULL AUTO_INCREMENT,
   question_id bigint(20) NOT NULL,
-  text VARCHAR(400) NOT NULL,
+  content VARCHAR(400) NOT NULL,
   correct boolean,
   PRIMARY KEY (answer_id),
   CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(question_id)); 
   
+ 
 INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
