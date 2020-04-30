@@ -121,7 +121,8 @@ public class DetectiveCaseService {
     }
 
     private String getFirstLocationName(List<Location> locations) {
-        return locations.stream().filter(location -> location.isStart()).collect(Collectors.toList()).get(0).getName();
+        if(!locations.isEmpty()) return locations.stream().filter(location -> location.isStart()).collect(Collectors.toList()).get(0).getName();
+        else return null;
     }
 
 
