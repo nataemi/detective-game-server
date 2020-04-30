@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS action_location(
   CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES location(location_id)); 
   
   CREATE TABLE IF NOT EXISTS action_item(
-  action_id bigint(20) NOT NULL AUTO_INCREMENT,
+  action_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
   PRIMARY KEY (action_id,item_id),
   CONSTRAINT fk_action_item FOREIGN KEY (action_id) REFERENCES action(action_id),
