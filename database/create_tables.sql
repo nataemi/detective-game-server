@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS action_location(
   CONSTRAINT fk_action_item FOREIGN KEY (action_id) REFERENCES action(action_id),
   CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES item(item_id)); 
   
+  
   CREATE TABLE IF NOT EXISTS action_action(
   action_id bigint(20) NOT NULL,
   revealed_id bigint(20) NOT NULL,
@@ -124,13 +125,10 @@ CREATE TABLE IF NOT EXISTS action_location(
   correct boolean,
   PRIMARY KEY (answer_id),
   CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(question_id)); 
-  
- 
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
 
 ALTER TABLE location ADD COLUMN is_Start boolean;
-ALTER TABLE detective_case ADD COLUMN bgnDate timestamp DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE detective_case ADD COLUMN bgn_date timestamp DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE action ADD COLUMN case_id bigint(20) NOT NULL;
 ALTER TABLE action ADD CONSTRAINT fk_case_action FOREIGN KEY (case_id) REFERENCES detective_case(id);
 ALTER TABLE detective_case ADD COLUMN frstAction bigint(20);
