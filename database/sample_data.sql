@@ -27,6 +27,8 @@ ale na początku poprzedniej lekcji zapisałeś w zeszycie chociaż temat. Po go
 Zabierasz się już do zapisywania, ale zaraz... Gdzie jest twój ulubiony (i zresztą jedyny) długopis!?", null, 2, 1, 1);
 
 UPDATE DETECTIVE_CASE SET FRSTACTION = 1 WHERE ID = 1;
+INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,3);
+INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,4);
 
 INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Obczaj biurko nauczycielki", "Nauczycielka często pożycza od kogoś długopisy i nigdy nie oddaje.
 Pod byle pretekstem podchodzisz do jej biurka i sprawdzasz czy nie zabrała twojego długopisu. Na biurku jest ich niestety mnóstwo i ciężko ci dostrzec czy któryś nie jest twoim ulubionym.",
