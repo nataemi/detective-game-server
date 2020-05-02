@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.detectivegame.payload.gameplay.DetectiveCaseInfoResponse;
-import pl.detectivegame.payload.gameplay.DetectiveCaseRequest;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
@@ -26,11 +26,24 @@ public class CreationController {
     @Autowired
     DetectiveCaseService detectiveCaseService;
 
-    @PostMapping
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/createDetectiveCase")
-    public DetectiveCaseInfoResponse createDetectiveCase(@Valid @RequestBody DetectiveCaseRequest detectiveCaseRequest) {
-        DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.createDetectiveCase(detectiveCaseRequest);
+    @PutMapping("/createDetectiveCaseInfo")
+    public DetectiveCaseInfoResponse createDetectiveCaseInfo(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+        DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.createDetectiveCase(detectiveCaseInfoRequest);
+        return detectiveCase;
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/updateDetectiveCaseInfo")
+    public DetectiveCaseInfoResponse updateDetectiveCaseInfo(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+        DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.updateDetectiveCase(detectiveCaseInfoRequest);
+        return detectiveCase;
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/createDetectiveCaseInfo")
+    public DetectiveCaseInfoResponse createQuestion(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+        DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.createDetectiveCase(detectiveCaseInfoRequest);
         return detectiveCase;
     }
 }

@@ -1,9 +1,11 @@
-package pl.detectivegame.payload.gameplay;
+package pl.detectivegame.payload.creation;
 
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
-public class DetectiveCaseRequest {
+public class DetectiveCaseInfoRequest {
 
     private Long id;
 
@@ -16,4 +18,6 @@ public class DetectiveCaseRequest {
     private boolean ready;
 
     private int time;
+
+    private Date bgnDt;
 }

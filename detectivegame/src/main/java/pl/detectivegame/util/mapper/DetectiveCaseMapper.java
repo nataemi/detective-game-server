@@ -2,7 +2,7 @@ package pl.detectivegame.util.mapper;
 
 import pl.detectivegame.model.DAO.DetectiveCaseInfo;
 import pl.detectivegame.model.DAO.User;
-import pl.detectivegame.payload.gameplay.DetectiveCaseInfoResponse;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.user.UserSummaryResponse;
 
 public class DetectiveCaseMapper {

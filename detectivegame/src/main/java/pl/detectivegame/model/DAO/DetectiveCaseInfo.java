@@ -7,11 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "detective_case")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

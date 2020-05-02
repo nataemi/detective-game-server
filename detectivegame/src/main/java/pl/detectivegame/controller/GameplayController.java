@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;

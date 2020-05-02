@@ -12,4 +12,5 @@ public interface DetectiveCaseInfoRepository extends JpaRepository<DetectiveCase
     Optional<DetectiveCaseInfo> findById(Long caseId);
 
     long countByCreator(Long userId);
+
 }

@@ -1,4 +1,4 @@
-package pl.detectivegame.payload.gameplay;
+package pl.detectivegame.payload.creation;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +17,5 @@ public class DetectiveCaseInfoResponse {
     private int time;
     private UserSummaryResponse createdBy;
     private Instant creationDateTime;
+    private Instant modifiedDateTime;
 }

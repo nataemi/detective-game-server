@@ -10,6 +10,8 @@ import pl.detectivegame.model.*;
 import pl.detectivegame.model.DAO.*;
 import pl.detectivegame.model.DAO.Action;
 import pl.detectivegame.model.DAO.Item;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.*;
@@ -18,6 +20,7 @@ import pl.detectivegame.util.mapper.DetectiveCaseMapper;
 import pl.detectivegame.util.mapper.ItemMapper;
 import pl.detectivegame.util.mapper.LocationConnectionResponseMapper;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -55,16 +58,29 @@ public class DetectiveCaseService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseRequest detectiveCaseRequest) {
+    public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
         DetectiveCaseInfo detectiveCaseInfo =
                 DetectiveCaseInfo.builder()
-                        .id(detectiveCaseRequest.getId())
-                        .image(detectiveCaseRequest.getImage())
-                        .name(detectiveCaseRequest.getName())
-                        .time(detectiveCaseRequest.getTime())
-                        .description(detectiveCaseRequest.getDescription())
-                        .ready(detectiveCaseRequest.isReady())
+                        .image(detectiveCaseInfoRequest.getImage())
+                        .name(detectiveCaseInfoRequest.getName())
+                        .time(detectiveCaseInfoRequest.getTime())
+                        .description(detectiveCaseInfoRequest.getDescription())
+                        .ready(detectiveCaseInfoRequest.isReady())
+                        .bgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
                         .build();
+        detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
+        User creator = getCreator(detectiveCaseInfo);
+        return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
+    }
+
+    public DetectiveCaseInfoResponse updateDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+        DetectiveCaseInfo detectiveCaseInfo = detectiveCaseInfoRepository.getOne(detectiveCaseInfoRequest.getId());
+        detectiveCaseInfo.setName(detectiveCaseInfoRequest.getName());
+        detectiveCaseInfo.setImage(detectiveCaseInfoRequest.getImage());
+        detectiveCaseInfo.setTime(detectiveCaseInfoRequest.getTime());
+        detectiveCaseInfo.setBgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()));
+        detectiveCaseInfo.setDescription(detectiveCaseInfoRequest.getDescription());
+        detectiveCaseInfo.setReady(detectiveCaseInfoRequest.isReady());
         detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
         User creator = getCreator(detectiveCaseInfo);
         return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
