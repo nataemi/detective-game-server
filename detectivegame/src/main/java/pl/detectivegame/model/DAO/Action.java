@@ -44,4 +44,8 @@ public class Action {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="action_id")
     private List<ActionItem> revealedItems;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="location")
+    private Location location;
 }

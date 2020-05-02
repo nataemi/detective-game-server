@@ -24,6 +24,7 @@ public class ActionMapper {
                 .name(action.getName())
                 .time(action.getTime())
                 .succesors(mapSuccesors(action.getRevealedActions(), action.getRevealedItems(), action.getRevealedLocations(),itemsIds))
+                .location(action.getLocation() != null ? action.getLocation().getName() : null)
                 .build()).collect(Collectors.toList());
     }
 

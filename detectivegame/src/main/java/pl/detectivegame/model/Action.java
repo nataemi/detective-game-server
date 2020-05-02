@@ -23,4 +23,6 @@ public class Action {
     private Date bgnDate;
 
     private List<Succesor> succesors;
+
+    private String location;
 }
