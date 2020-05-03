@@ -20,4 +20,7 @@ public class Answer {
     private String content;
 
     private boolean correct;
+
+    @Column(name="question_id")
+    private Long questionId;
 }

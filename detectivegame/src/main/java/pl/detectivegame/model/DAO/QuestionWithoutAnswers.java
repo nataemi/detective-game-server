@@ -1,16 +1,19 @@
 package pl.detectivegame.model.DAO;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "question")
-@Data
+@Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class Question {
+public class QuestionWithoutAnswers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +25,5 @@ public class Question {
 
     private String content;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_id")
-    List<Answer> answers;
 }
 
