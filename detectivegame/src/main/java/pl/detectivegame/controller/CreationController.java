@@ -6,10 +6,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
+import pl.detectivegame.payload.creation.LocationPayload;
 import pl.detectivegame.payload.creation.QuestionPayload;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
+import pl.detectivegame.service.LocationService;
 import pl.detectivegame.service.QuestionService;
 
 import javax.validation.Valid;
@@ -30,6 +32,9 @@ public class CreationController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    LocationService locationService;
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/createDetectiveCaseInfo")
@@ -55,6 +60,18 @@ public class CreationController {
     @PostMapping("/updateQuestion")
     public QuestionPayload updateQuestion(@Valid @RequestBody QuestionPayload questionPayload) {
         return questionService.updateQuestion(questionPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/createLocation")
+    public @Valid LocationPayload createLocation(@Valid @RequestBody LocationPayload locationPayload) {
+        return locationService.saveLocation(locationPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/updateLocation")
+    public @Valid LocationPayload updateLocation(@Valid @RequestBody LocationPayload locationPayload) {
+        return locationService.saveLocation(locationPayload);
     }
 
 
