@@ -21,4 +21,8 @@ public class LocationService {
     }
 
 
+    public void deleteLocation(LocationPayload locationPayload) {
+        Location location = locationPayload.getLocation();
+        locationRepository.delete(location);
+    }
 }

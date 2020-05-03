@@ -13,6 +13,7 @@ import pl.detectivegame.util.mapper.QuestionMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -59,11 +60,24 @@ public class QuestionService {
         question.setAnswers(answers);
     }
 
+    private void deleteAnswers(Question question) {
+        for (Answer answer : question.getAnswers()) {
+            answerRepository.delete(answer);
+        }
+    }
+
     private void deleteUnusedAnswers(Question question) {
         List<Answer> answersInDb = answerRepository.findByQuestionId(question.getQuestionId());
         Set<Long> answerRequestIds = question.getAnswers().stream().map(answer -> answer.getAnswerId()).collect(Collectors.toSet());
         for (Answer answerInDb : answersInDb){
             if (!answerRequestIds.contains(answerInDb.getAnswerId())) answerRepository.delete(answerInDb);
         }
+    }
+
+    public void deleteQuestion(QuestionPayload questionPayload) {
+        Question question = questionPayload.getQuestion();
+        deleteAnswers(question);
+        QuestionWithoutAnswers questionWithoutAnswers = QuestionMapper.mapWithQuestionId(question);
+        questionWithoutAnswersRepostiory.delete(questionWithoutAnswers);
     }
 }
