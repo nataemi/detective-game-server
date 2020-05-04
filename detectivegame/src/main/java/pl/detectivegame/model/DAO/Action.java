@@ -1,17 +1,20 @@
 package pl.detectivegame.model.DAO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "action")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Action {
 
     @Id
@@ -27,8 +30,6 @@ public class Action {
     private String image;
 
     private int time;
-
-    private Date bgnDate;
 
     @Column(name = "case_id")
     private Long caseId;

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Succesor {
+public class Successor {
 
     private Long id;
     private String type;

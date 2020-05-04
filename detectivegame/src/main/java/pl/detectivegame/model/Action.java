@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,12 +21,14 @@ public class Action {
 
     private int time;
 
-    private List<Succesor> succesors;
+    private List<Successor> successors;
 
     private String location;
 
     private boolean revealed;
 
     private boolean done;
+
+    private String caseId;
 
 }

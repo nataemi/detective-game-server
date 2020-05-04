@@ -1,6 +1,6 @@
 package pl.detectivegame.model;
 
-public enum SuccesorType {
+public enum SuccessorType {
     ITEMS("items"),
     LOCATIONS("locations"),
     ACTIONS("actions"),
@@ -8,7 +8,7 @@ public enum SuccesorType {
 
     private String value;
 
-    SuccesorType(String value) {
+    SuccessorType(String value) {
         this.value = value;
     }
 
