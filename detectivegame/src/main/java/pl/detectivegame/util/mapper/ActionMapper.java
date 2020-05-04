@@ -5,8 +5,8 @@ import pl.detectivegame.model.DAO.ActionAction;
 import pl.detectivegame.model.DAO.ActionItem;
 import pl.detectivegame.model.DAO.ActionLocation;
 import pl.detectivegame.model.Item;
-import pl.detectivegame.model.Succesor;
-import pl.detectivegame.model.SuccesorType;
+import pl.detectivegame.model.Successor;
+import pl.detectivegame.model.SuccessorType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,35 +24,42 @@ public class ActionMapper {
                 .time(action.getTime())
                 .revealed(false)
                 .done(false)
-                .succesors(mapSuccesors(action.getRevealedActions(), action.getRevealedItems(), action.getRevealedLocations(),itemsIds))
+                .caseId(action.getCaseId())
+                .successors(mapSuccesors(action.getRevealedActions(), action.getRevealedItems(), action.getRevealedLocations(),itemsIds))
                 .location(action.getLocation() != null ? action.getLocation().getName() : null)
                 .build()).collect(Collectors.toList());
     }
 
-     static private List<Succesor> mapSuccesors(List<ActionAction> revealedActions, List<ActionItem> revealedItems, List<ActionLocation> revealedLocations, List<Long> items) {
-        List<Succesor> succesors;
-        succesors = mapActionActionListToSuccesorsList(revealedActions);
-        mapActionItemListToSuccesorsList(revealedItems, succesors, items);
-        mapActionLocationListToSuccesorsList(revealedLocations, succesors);
-        return succesors;
+     static private List<Successor> mapSuccesors(List<ActionAction> revealedActions, List<ActionItem> revealedItems, List<ActionLocation> revealedLocations, List<Long> items) {
+        List<Successor> successors;
+        successors = mapActionActionListToSuccesorsList(revealedActions);
+        mapActionItemListToSuccesorsList(revealedItems, successors, items);
+        mapActionLocationListToSuccesorsList(revealedLocations, successors);
+        return successors;
     }
 
-     static private boolean mapActionLocationListToSuccesorsList(List<ActionLocation> revealedLocations, List<Succesor> succesors) {
-        return succesors.addAll(revealedLocations.stream().map(actionLocation ->
-                Succesor.builder().id(actionLocation.getActionLocationIdentity().getLocationId()).type(SuccesorType.LOCATIONS.getValue()).build()).collect(Collectors.toList()));
+     static private boolean mapActionLocationListToSuccesorsList(List<ActionLocation> revealedLocations, List<Successor> successors) {
+        return successors.addAll(revealedLocations.stream().map(actionLocation ->
+                Successor.builder().id(actionLocation.getActionLocationIdentity().getLocationId()).type(SuccessorType.LOCATIONS.getValue()).build()).collect(Collectors.toList()));
     }
 
-    static private boolean mapActionItemListToSuccesorsList(List<ActionItem> revealedItems, List<Succesor> succesors, List<Long> items) {
-        return succesors.addAll(revealedItems.stream().map(actionItem ->
-                Succesor.builder().id(actionItem.getActionActionIdentity().getItemId()).type(getItemSuccesorType(items,actionItem).getValue()).build()).collect(Collectors.toList()));
+    static private boolean mapActionItemListToSuccesorsList(List<ActionItem> revealedItems, List<Successor> successors, List<Long> items) {
+        return successors.addAll(revealedItems.stream().map(actionItem ->
+                Successor.builder().id(actionItem.getActionActionIdentity().getItemId()).type(getItemSuccesorType(items,actionItem).getValue()).build()).collect(Collectors.toList()));
     }
 
-    private static SuccesorType getItemSuccesorType(List<Long> items, ActionItem actionItem) {
-        return items.contains(actionItem.getActionActionIdentity().getItemId()) ? SuccesorType.ITEMS : SuccesorType.PEOPLE;
+    private static SuccessorType getItemSuccesorType(List<Long> items, ActionItem actionItem) {
+        return items.contains(actionItem.getActionActionIdentity().getItemId()) ? SuccessorType.ITEMS : SuccessorType.PEOPLE;
     }
 
-    static private List<Succesor> mapActionActionListToSuccesorsList(List<ActionAction> revealedActions) {
+    static private List<Successor> mapActionActionListToSuccesorsList(List<ActionAction> revealedActions) {
         return revealedActions.stream().map(actionAction ->
-                Succesor.builder().id(actionAction.getActionActionIdentity().getRevealedId()).type(SuccesorType.ACTIONS.getValue()).build()).collect(Collectors.toList());
+                Successor.builder().id(actionAction.getActionActionIdentity().getRevealedId()).type(SuccessorType.ACTIONS.getValue()).build()).collect(Collectors.toList());
+    }
+
+
+    static public pl.detectivegame.model.DAO.Action mapWithoutSuccesorsAndId(Action action){
+        return pl.detectivegame.model.DAO.Action.builder()
+                .build();
     }
 }

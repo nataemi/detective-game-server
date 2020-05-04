@@ -29,6 +29,6 @@ public class Action {
 
     private boolean done;
 
-    private String caseId;
+    private Long caseId;
 
 }
