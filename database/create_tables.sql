@@ -98,8 +98,8 @@ ALTER TABLE location ADD COLUMN is_Start boolean;
 ALTER TABLE detective_case ADD COLUMN bgn_date timestamp DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE action ADD COLUMN case_id bigint(20) NOT NULL;
 ALTER TABLE action ADD CONSTRAINT fk_case_action FOREIGN KEY (case_id) REFERENCES detective_case(id);
-ALTER TABLE detective_case ADD COLUMN frstAction bigint(20);
-ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frstAction) REFERENCES action(action_id);
+ALTER TABLE detective_case ADD COLUMN frst_action_id bigint(20);
+ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frst_action_id) REFERENCES action(action_id);
 ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
 
