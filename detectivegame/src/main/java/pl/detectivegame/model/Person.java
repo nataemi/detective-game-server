@@ -14,7 +14,7 @@ public class Person {
     private Long personId;
 
     @NotBlank
-    private String fullName;
+    private String fullname;
 
     private String description;
 
