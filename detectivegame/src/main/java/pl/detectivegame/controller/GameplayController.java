@@ -35,7 +35,7 @@ public class GameplayController {
     }
 
     @GetMapping("/getNewDetectiveCaseById/{detectiveCaseId}")
-    public DetectiveCaseResponse getDetectiveCaseById(@PathVariable Long detectiveCaseId) {
+    public DetectiveCaseResponse getNewDetectiveCaseById(@PathVariable Long detectiveCaseId) {
         return detectiveCaseService.getNewDetectiveCaseById(detectiveCaseId);
     }
 

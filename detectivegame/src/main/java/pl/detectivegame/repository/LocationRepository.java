@@ -10,4 +10,6 @@ import java.util.List;
 public interface LocationRepository extends JpaRepository<Location,Long> {
 
     List<Location> findByCaseId(Long caseId);
+
+    Location findByNameEqualsAndCaseIdEquals(String name, Long caseId);
 }

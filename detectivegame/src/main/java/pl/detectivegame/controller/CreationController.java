@@ -41,6 +41,9 @@ public class CreationController {
     @Autowired
     PersonService personService;
 
+    @Autowired
+    ActionService actionService;
+
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/createDetectiveCaseInfo")
     public DetectiveCaseInfoResponse createDetectiveCaseInfo(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
@@ -149,5 +152,24 @@ public class CreationController {
     public ApiResponse deletePerson(@Valid @RequestBody PersonPayload personPayload) {
         personService.deletePerson(personPayload);
         return new ApiResponse(true, "Person deleted");
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/createAction")
+    public ActionPayload createAction(@Valid @RequestBody ActionPayload actionPayload) {
+        return actionService.createAction(actionPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/updateAction")
+    public ActionPayload updateAction(@Valid @RequestBody ActionPayload actionPayload) {
+        return actionService.createAction(actionPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/deleteAction")
+    public ApiResponse deleteAction(@Valid @RequestBody ActionPayload actionPayload) {
+        actionService.deleteAction(actionPayload);
+        return new ApiResponse(true, "Action deleted");
     }
 }
