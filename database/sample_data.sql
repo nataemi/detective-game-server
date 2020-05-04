@@ -20,7 +20,7 @@ INSERT INTO ITEM(name, description, image, examResult, type_of_item) VALUES("Mac
 
 INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Początek", "Siedzisz na lekcji matematyki. To już druga z rzędu lekcja w tej samej sali. Nie uważałeś za bardzo, ale na początku poprzedniej lekcji zapisałeś w zeszycie chociaż temat. Po godzinie nieuważania nagle orientujesz się, że zadanie jest dosyć trudne, więc wypadałoby sobie je zapisać w zeszycie. Zabierasz się już do zapisywania, ale zaraz... Gdzie jest twój ulubiony (i zresztą jedyny) długopis!?", null, 2, 1, 1);
 
-UPDATE DETECTIVE_CASE SET FRSTACTION = 1 WHERE ID = 1;
+UPDATE DETECTIVE_CASE SET frst_action_id = 1 WHERE ID = 1;
 INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,3);
 INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,4);
 
