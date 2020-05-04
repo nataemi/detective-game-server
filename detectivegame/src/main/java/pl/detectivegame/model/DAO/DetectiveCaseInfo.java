@@ -35,6 +35,7 @@ public class DetectiveCaseInfo extends UserDateAudit {
 
     private int time;
 
+    @Column(name = "frst_action_id")
     private long frstActionId;
 
     @Column(name = "bgn_date", nullable = false)
