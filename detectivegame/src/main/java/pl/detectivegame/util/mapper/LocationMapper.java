@@ -15,4 +15,15 @@ public class LocationMapper {
                 .locationId(location.getLocationId())
                 .build();
     }
+
+    public static Location map(pl.detectivegame.model.Location location){
+        return  Location.builder()
+                .caseId(location.getCaseId())
+                .description(location.getDescription())
+                .image(location.getImage())
+                .name(location.getName())
+                .isStart(location.isStart())
+                .locationId(location.getLocationId())
+                .build();
+    }
 }
