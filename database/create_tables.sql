@@ -1,32 +1,3 @@
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  `username` varchar(15) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_users_username` (`username`),
-  UNIQUE KEY `uk_users_email` (`email`)
-);
-
-CREATE TABLE IF NOT EXISTS roles (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  name varchar(60) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY uk_roles_name (name)
-);
-
-CREATE TABLE IF NOT EXISTS user_roles (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `fk_user_roles_role_id` (`role_id`),
-  CONSTRAINT `fk_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-  CONSTRAINT `fk_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
-
 CREATE TABLE IF NOT EXISTS detective_case (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   creator bigint(20) NOT NULL,
@@ -127,8 +98,8 @@ ALTER TABLE location ADD COLUMN is_Start boolean;
 ALTER TABLE detective_case ADD COLUMN bgn_date timestamp DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE action ADD COLUMN case_id bigint(20) NOT NULL;
 ALTER TABLE action ADD CONSTRAINT fk_case_action FOREIGN KEY (case_id) REFERENCES detective_case(id);
-ALTER TABLE detective_case ADD COLUMN frstAction bigint(20);
-ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frstAction) REFERENCES action(action_id);
+ALTER TABLE detective_case ADD COLUMN frst_action_id bigint(20);
+ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frst_action_id) REFERENCES action(action_id);
 ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
 
