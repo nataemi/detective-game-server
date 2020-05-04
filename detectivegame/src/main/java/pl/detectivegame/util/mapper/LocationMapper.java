@@ -10,7 +10,7 @@ public class LocationMapper {
                 .description(location.getDescription())
                 .image(location.getImage())
                 .name(location.getName())
-                .revealed(false)
+                .revealed(location.isStart())
                 .isStart(location.isStart())
                 .locationId(location.getLocationId())
                 .build();
