@@ -31,6 +31,7 @@ public class Item {
 
     private String image;
 
+    @Column(name = "exam_result")
     private String examResult;
 
     @Column(name = "type_of_item")
