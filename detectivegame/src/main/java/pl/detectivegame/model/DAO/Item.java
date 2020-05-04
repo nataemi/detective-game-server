@@ -1,5 +1,7 @@
 package pl.detectivegame.model.DAO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "item")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @NamedNativeQuery(name = "Item.findAllInCase",
         query = "SELECT * FROM ITEM i WHERE i.item_id IN (SELECT item_id FROM ACTION_ITEM WHERE ACTION_ID IN (SELECT ACTION_ID FROM ACTION WHERE CASE_ID = :detectiveCaseId));",
         resultClass = Item.class)

@@ -8,5 +8,5 @@ import lombok.Data;
 public class Succesor {
 
     private Long id;
-    private SuccesorType type;
+    private String type;
 }

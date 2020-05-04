@@ -18,8 +18,8 @@ public class LocationConnectionResponseMapper {
         responseLocationConnections = locationConnections.stream().map(locationConnection ->
             LocationConnectionWithName.builder()
                     .cost(locationConnection.getTime())
-                    .from(locationIdToString.get(locationConnection.getLocationConnectionIdentity().getFromId()))
-                    .to(locationIdToString.get(locationConnection.getLocationConnectionIdentity().getToId()))
+                    .location1(locationIdToString.get(locationConnection.getLocationConnectionIdentity().getFromId()))
+                    .location2(locationIdToString.get(locationConnection.getLocationConnectionIdentity().getToId()))
                     .build()
         ).collect(Collectors.toList());
 

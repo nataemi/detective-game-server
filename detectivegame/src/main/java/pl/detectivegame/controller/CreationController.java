@@ -5,17 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.detectivegame.payload.ApiResponse;
-import pl.detectivegame.payload.creation.LocationConnectionPayload;
-import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
-import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
-import pl.detectivegame.payload.creation.LocationPayload;
-import pl.detectivegame.payload.creation.QuestionPayload;
+import pl.detectivegame.payload.creation.*;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
-import pl.detectivegame.service.DetectiveCaseService;
-import pl.detectivegame.service.LocationConnectionService;
-import pl.detectivegame.service.LocationService;
-import pl.detectivegame.service.QuestionService;
+import pl.detectivegame.service.*;
 
 import javax.validation.Valid;
 
@@ -41,6 +34,12 @@ public class CreationController {
 
     @Autowired
     LocationConnectionService locationConnectionService;
+
+    @Autowired
+    ItemService itemService;
+
+    @Autowired
+    PersonService personService;
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/createDetectiveCaseInfo")
@@ -113,4 +112,42 @@ public class CreationController {
         return new ApiResponse(true, "LocationConnection deleted");
     }
 
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/createItem")
+    public ItemPayload createItem(@Valid @RequestBody ItemPayload itemPayload) {
+        return itemService.saveItem(itemPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/updateItem")
+    public ItemPayload updateItem(@Valid @RequestBody ItemPayload itemPayload) {
+        return itemService.saveItem(itemPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/deleteItem")
+    public ApiResponse deleteItem(@Valid @RequestBody ItemPayload itemPayload) {
+        itemService.deleteItem(itemPayload);
+        return new ApiResponse(true, "Item deleted");
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/createPerson")
+    public PersonPayload createPerson(@Valid @RequestBody PersonPayload personPayload) {
+        return personService.savePerson(personPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/updatePerson")
+    public PersonPayload updatePerson(@Valid @RequestBody PersonPayload personPayload) {
+        return personService.savePerson(personPayload);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/deletePerson")
+    public ApiResponse deletePerson(@Valid @RequestBody PersonPayload personPayload) {
+        personService.deletePerson(personPayload);
+        return new ApiResponse(true, "Person deleted");
+    }
 }

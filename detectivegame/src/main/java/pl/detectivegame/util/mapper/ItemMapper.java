@@ -1,6 +1,7 @@
 package pl.detectivegame.util.mapper;
 
 import pl.detectivegame.model.Item;
+import pl.detectivegame.model.ItemType;
 import pl.detectivegame.model.Person;
 
 public class ItemMapper {
@@ -24,6 +25,27 @@ public class ItemMapper {
                 .image(item.getImage())
                 .fullName(item.getName())
                 .revealed(false)
+                .build();
+    }
+
+    public static pl.detectivegame.model.DAO.Item mapToItem(Item item){
+        return pl.detectivegame.model.DAO.Item.builder()
+                .typeOfItem(ItemType.ITEM.getType())
+                .name(item.getName())
+                .description(item.getDescription())
+                .itemId(item.getItemId())
+                .image(item.getImage())
+                .examResult(item.getExamineInfo())
+                .build();
+    }
+
+    public static pl.detectivegame.model.DAO.Item mapToItem(Person person){
+        return pl.detectivegame.model.DAO.Item.builder()
+                .description(person.getDescription())
+                .image(person.getImage())
+                .itemId(person.getPersonId())
+                .name(person.getFullName())
+                .typeOfItem(ItemType.PERSON.getType())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package pl.detectivegame.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class Item {
 
+    @JsonProperty("id")
     private Long itemId;
 
     @NotBlank

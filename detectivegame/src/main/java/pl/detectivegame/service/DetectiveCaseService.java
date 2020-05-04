@@ -10,15 +10,13 @@ import pl.detectivegame.model.*;
 import pl.detectivegame.model.DAO.*;
 import pl.detectivegame.model.DAO.Action;
 import pl.detectivegame.model.DAO.Item;
+import pl.detectivegame.model.DAO.Location;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.*;
-import pl.detectivegame.util.mapper.ActionMapper;
-import pl.detectivegame.util.mapper.DetectiveCaseMapper;
-import pl.detectivegame.util.mapper.ItemMapper;
-import pl.detectivegame.util.mapper.LocationConnectionResponseMapper;
+import pl.detectivegame.util.mapper.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -102,10 +100,11 @@ public class DetectiveCaseService {
 
         DetectiveCaseInfo detectiveCaseInfo = detectiveCaseInfoRepository.getOne(detectiveCaseId);
         List<Action> actions = actionRepository.findByCaseId(detectiveCaseId);
-        List<Location> locations = locationRepository.findByCaseId(detectiveCaseId);
+        List<Location> locationsDAO = locationRepository.findByCaseId(detectiveCaseId);
+        List<pl.detectivegame.model.Location> locations = locationsDAO.stream().map(location -> LocationMapper.map(location)).collect(Collectors.toList());
         List<LocationConnection> locationConnections = locationConnectionRepository.
-                findAllByLocationConnectionIdentity_FromIdIn(locations.stream().map(Location::getLocationId).collect(Collectors.toList()));
-        List<LocationConnectionWithName> paths = LocationConnectionResponseMapper.map(locationConnections, locations);
+                findAllByLocationConnectionIdentity_FromIdIn(locationsDAO.stream().map(Location::getLocationId).collect(Collectors.toList()));
+        List<LocationConnectionWithName> paths = LocationConnectionResponseMapper.map(locationConnections, locationsDAO);
         List<Question> test = questionRepository.findByCaseId(detectiveCaseId);
         List<Item> allItems = itemRepository.findAllInCase(detectiveCaseId);
         List<pl.detectivegame.model.Item> items = getItems(allItems);
@@ -136,7 +135,7 @@ public class DetectiveCaseService {
         return allItems.stream().filter(item -> item.getTypeOfItem().equals(ItemType.PERSON.getType())).map(item -> ItemMapper.mapToPerson(item)).collect(Collectors.toList());
     }
 
-    private String getFirstLocationName(List<Location> locations) {
+    private String getFirstLocationName(List<pl.detectivegame.model.Location> locations) {
         if(!locations.isEmpty()) return locations.stream().filter(location -> location.isStart()).collect(Collectors.toList()).get(0).getName();
         else return null;
     }

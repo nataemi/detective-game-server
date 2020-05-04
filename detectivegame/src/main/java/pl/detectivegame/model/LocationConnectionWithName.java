@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class LocationConnectionWithName {
 
-    String from;
-    String to;
+    String location1;
+    String location2;
     int cost;
 }

@@ -18,11 +18,12 @@ public class ActionMapper {
         List<Long> itemsIds = items.stream().map(Item::getItemId).collect(Collectors.toList());
         return actions.stream().map(action -> Action.builder()
                 .actionId(action.getActionId())
-                .bgnDate(action.getBgnDate())
                 .description(action.getDescription())
                 .image(action.getImage())
                 .name(action.getName())
                 .time(action.getTime())
+                .revealed(false)
+                .done(false)
                 .succesors(mapSuccesors(action.getRevealedActions(), action.getRevealedItems(), action.getRevealedLocations(),itemsIds))
                 .location(action.getLocation() != null ? action.getLocation().getName() : null)
                 .build()).collect(Collectors.toList());
@@ -38,12 +39,12 @@ public class ActionMapper {
 
      static private boolean mapActionLocationListToSuccesorsList(List<ActionLocation> revealedLocations, List<Succesor> succesors) {
         return succesors.addAll(revealedLocations.stream().map(actionLocation ->
-                Succesor.builder().id(actionLocation.getActionLocationIdentity().getLocationId()).type(SuccesorType.LOCATIONS).build()).collect(Collectors.toList()));
+                Succesor.builder().id(actionLocation.getActionLocationIdentity().getLocationId()).type(SuccesorType.LOCATIONS.getValue()).build()).collect(Collectors.toList()));
     }
 
     static private boolean mapActionItemListToSuccesorsList(List<ActionItem> revealedItems, List<Succesor> succesors, List<Long> items) {
         return succesors.addAll(revealedItems.stream().map(actionItem ->
-                Succesor.builder().id(actionItem.getActionActionIdentity().getItemId()).type(getItemSuccesorType(items,actionItem)).build()).collect(Collectors.toList()));
+                Succesor.builder().id(actionItem.getActionActionIdentity().getItemId()).type(getItemSuccesorType(items,actionItem).getValue()).build()).collect(Collectors.toList()));
     }
 
     private static SuccesorType getItemSuccesorType(List<Long> items, ActionItem actionItem) {
@@ -52,6 +53,6 @@ public class ActionMapper {
 
     static private List<Succesor> mapActionActionListToSuccesorsList(List<ActionAction> revealedActions) {
         return revealedActions.stream().map(actionAction ->
-                Succesor.builder().id(actionAction.getActionActionIdentity().getRevealedId()).type(SuccesorType.ACTIONS).build()).collect(Collectors.toList());
+                Succesor.builder().id(actionAction.getActionActionIdentity().getRevealedId()).type(SuccesorType.ACTIONS.getValue()).build()).collect(Collectors.toList());
     }
 }

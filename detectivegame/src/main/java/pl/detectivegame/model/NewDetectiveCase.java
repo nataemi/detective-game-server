@@ -1,9 +1,9 @@
 package pl.detectivegame.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-import pl.detectivegame.model.DAO.Location;
 import pl.detectivegame.model.DAO.Question;
 
 import java.util.Date;
@@ -13,8 +13,10 @@ import java.util.List;
 @Builder
 public class NewDetectiveCase {
 
+    @JsonProperty(value = "movement_points")
     int movementPoints;
     Date date;
+    @JsonProperty(value = "frst_action_id")
     long frstActionId;
     String location;
     List<Action> actions;
