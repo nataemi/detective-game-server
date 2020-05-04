@@ -23,7 +23,7 @@ public class ItemMapper {
                 .description(item.getDescription())
                 .personId(item.getItemId())
                 .image(item.getImage())
-                .fullName(item.getName())
+                .fullname(item.getName())
                 .revealed(false)
                 .build();
     }
@@ -44,7 +44,7 @@ public class ItemMapper {
                 .description(person.getDescription())
                 .image(person.getImage())
                 .itemId(person.getPersonId())
-                .name(person.getFullName())
+                .name(person.getFullname())
                 .typeOfItem(ItemType.PERSON.getType())
                 .build();
     }
