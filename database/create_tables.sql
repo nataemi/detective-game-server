@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS detective_case (
   name VARCHAR(255) NOT NULL,
   description VARCHAR(2000),
   image VARCHAR(255),
-  examResult VARCHAR(2000),
+  exam_result VARCHAR(2000),
   type_of_item CHAR,  
   PRIMARY KEY (item_id));
   
