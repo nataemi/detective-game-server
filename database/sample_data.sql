@@ -4,8 +4,8 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 #create user through app
 
 #EXAMPLE CASE 1
-INSERT INTO detective_case(creator, name, description, image, ready, time, frstAction) 
-VALUES (1, "Zaginiony dlugopis", "Pomoz uczniowi odkryc kto ukradl jego ulubiony dlugopis", null, 1, 10, null);
+INSERT INTO detective_case(creator, name, description, image, ready, time) 
+VALUES (1, "Zaginiony dlugopis", "Pomoz uczniowi odkryc kto ukradl jego ulubiony dlugopis", null, 1, 10);
 
 INSERT INTO LOCATION(case_id, name, description, image, is_Start) VALUES (1, "szkola", "Szkola Podstawowa nr 46 we Wroclawiu do ktorej uczeszczasz", null, true);
 INSERT INTO LOCATION(case_id, name, description, image, is_Start) VALUES (1, "dom", "Blok mieszkalny przy ul. Slicznej, troche podstarzaly. Twoja rodzina mieszka tu od lat. Raczej nie zdarzaja sie wlamania. Poza tym, kto by ukradl dlugopis? No chyba że mama.", null, false);
