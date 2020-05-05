@@ -102,4 +102,4 @@ ALTER TABLE detective_case ADD COLUMN frst_action_id bigint(20);
 ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frst_action_id) REFERENCES action(action_id);
 ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
-
+ALTER TABLE item ADD COLUMN exam_cost int NOT NULL DEFAULT 1;
