@@ -37,4 +37,7 @@ public class Item {
     @Column(name = "type_of_item")
     private Character typeOfItem;
 
+    @Column(name = "exam_cost")
+    private int examCost;
+
 }

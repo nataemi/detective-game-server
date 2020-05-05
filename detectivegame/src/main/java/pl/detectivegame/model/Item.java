@@ -26,4 +26,7 @@ public class Item {
 
     private boolean examined;
 
+    @JsonProperty("exam_cost")
+    private int examCost;
+
 }

@@ -15,6 +15,7 @@ public class ItemMapper {
                 .image(item.getImage())
                 .name(item.getName())
                 .revealed(false)
+                .examCost(item.getExamCost())
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class ItemMapper {
                 .itemId(item.getItemId())
                 .image(item.getImage())
                 .examResult(item.getExamineInfo())
+                .examCost(item.getExamCost())
                 .build();
     }
 
