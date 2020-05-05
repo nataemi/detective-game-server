@@ -67,11 +67,11 @@ public class ActionMapper {
 
     static private boolean mapActionItemListToSuccesorsList(List<ActionItem> revealedItems, List<Successor> successors, List<Long> items) {
         return successors.addAll(revealedItems.stream().map(actionItem ->
-                Successor.builder().id(actionItem.getActionActionIdentity().getItemId()).type(getItemSuccesorType(items,actionItem).getValue()).build()).collect(Collectors.toList()));
+                Successor.builder().id(actionItem.getActionItemIdentity().getItemId()).type(getItemSuccesorType(items,actionItem).getValue()).build()).collect(Collectors.toList()));
     }
 
     private static SuccessorType getItemSuccesorType(List<Long> items, ActionItem actionItem) {
-        return items.contains(actionItem.getActionActionIdentity().getItemId()) ? SuccessorType.ITEMS : SuccessorType.PEOPLE;
+        return items.contains(actionItem.getActionItemIdentity().getItemId()) ? SuccessorType.ITEMS : SuccessorType.PEOPLE;
     }
 
     static private List<Successor> mapActionActionListToSuccesorsList(List<ActionAction> revealedActions) {
@@ -82,6 +82,18 @@ public class ActionMapper {
 
     static public pl.detectivegame.model.DAO.Action mapWithoutSuccesorsAndId(Action action, Location location){
         return pl.detectivegame.model.DAO.Action.builder()
+                .caseId(action.getCaseId())
+                .description(action.getDescription())
+                .image(action.getImage())
+                .location(location)
+                .time(action.getTime())
+                .name(action.getName())
+                .build();
+    }
+
+    static public pl.detectivegame.model.DAO.Action mapWithoutSuccesors(Action action, Location location){
+        return pl.detectivegame.model.DAO.Action.builder()
+                .actionId(action.getActionId())
                 .caseId(action.getCaseId())
                 .description(action.getDescription())
                 .image(action.getImage())

@@ -163,7 +163,7 @@ public class CreationController {
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/updateAction")
     public ActionPayload updateAction(@Valid @RequestBody ActionPayload actionPayload) {
-        return actionService.createAction(actionPayload);
+        return actionService.updateAction(actionPayload);
     }
 
     @PreAuthorize("hasRole('USER')")

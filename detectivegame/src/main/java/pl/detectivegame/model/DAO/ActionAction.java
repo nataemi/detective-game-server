@@ -1,7 +1,6 @@
 package pl.detectivegame.model.DAO;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -9,8 +8,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "action_action")
-@Data
+@Getter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ActionAction {
 
     @EmbeddedId

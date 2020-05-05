@@ -1,5 +1,7 @@
 package pl.detectivegame.model.DAO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import javax.persistence.Table;
 @Table(name = "action_location")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ActionLocation {
 
     @EmbeddedId

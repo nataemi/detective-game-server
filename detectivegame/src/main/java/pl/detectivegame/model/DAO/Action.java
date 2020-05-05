@@ -34,19 +34,19 @@ public class Action {
     @Column(name = "case_id")
     private Long caseId;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @JoinColumn(name="action_id")
     private List<ActionLocation> revealedLocations;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @JoinColumn(name="action_id")
     private List<ActionAction> revealedActions;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @JoinColumn(name="action_id")
     private List<ActionItem> revealedItems;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne()
     @JoinColumn(name="location")
     private Location location;
 }
