@@ -56,6 +56,8 @@ public class DetectiveCaseService {
     @Autowired
     QuestionRepository questionRepository;
 
+    private static final int QUESTION_VALUE = 10;
+
     public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
         DetectiveCaseInfo detectiveCaseInfo =
                 DetectiveCaseInfo.builder()
@@ -123,6 +125,7 @@ public class DetectiveCaseService {
                                 .items(items)
                                 .people(people)
                                 .test(test)
+                                .maxScore(test.size() * QUESTION_VALUE)
                                 .build()).build();
         return detectiveCaseResponse;
     }

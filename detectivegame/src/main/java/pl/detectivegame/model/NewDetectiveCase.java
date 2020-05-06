@@ -18,6 +18,8 @@ public class NewDetectiveCase {
     Date date;
     @JsonProperty(value = "frst_action_id")
     long frstActionId;
+    @JsonProperty(value = "max_score")
+    int maxScore;
     String location;
     List<Action> actions;
     List<Location> locations;
