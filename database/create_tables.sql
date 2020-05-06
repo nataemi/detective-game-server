@@ -103,3 +103,4 @@ ALTER TABLE detective_case ADD CONSTRAINT fk_case_frstAction FOREIGN KEY (frst_a
 ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
 ALTER TABLE item ADD COLUMN exam_cost int NOT NULL DEFAULT 1;
+ALTER TABLE location ADD UNIQUE unq_name_for_case(case_id,name);
