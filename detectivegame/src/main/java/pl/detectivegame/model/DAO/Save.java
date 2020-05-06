@@ -11,6 +11,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Builder
 public class Save {
     @Id

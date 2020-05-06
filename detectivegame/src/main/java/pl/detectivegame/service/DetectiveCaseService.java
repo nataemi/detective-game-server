@@ -142,35 +142,51 @@ public class DetectiveCaseService {
 
 
     public ResponseEntity<SaveDetectiveCaseResponse> saveDetectiveCase(JsonObject saveDetectiveCaseRequest) {
-
-        String caseId;
-        String player;
+        Save save = null;
         String saveJson;
-        String score;
+        Long caseId;
+        Long player;
+        int score;
+        String scoreString;
+        String caseIdString;
+        String playerString;
         try {
-             caseId = saveDetectiveCaseRequest.get("caseId").toString();
-             player = saveDetectiveCaseRequest.get("playerId").toString();
+             caseIdString = saveDetectiveCaseRequest.get("caseId").toString();
+             playerString = saveDetectiveCaseRequest.get("playerId").toString();
              saveJson = saveDetectiveCaseRequest.get("saveJson").toString();
-             score = saveDetectiveCaseRequest.get("score").toString();
+             scoreString = saveDetectiveCaseRequest.get("score").toString();
+
+             caseId = Long.parseLong(caseIdString);
+             player = Long.parseLong(playerString);
+             score = Integer.parseInt(scoreString);
         }
         catch (Exception e){
             throw new IllegalArgumentException("Incorrect Request format or value");
         }
 
+        Optional<Save> saveDb = saveRepository.findFirstByPlayerAndCaseIdOrderByLastModifiedDesc(player, caseId);
 
-        Save save = Save.builder()
-                .caseId(Long.parseLong(caseId))
-                .player(Long.parseLong(player))
-                .lastModified(new Date())
-                .save_json(saveJson)
-                .score(Integer.parseInt(score))
-                .build();
+        if(!saveDb.isPresent()){
+            save = Save.builder()
+                    .caseId(caseId)
+                    .player(player)
+                    .lastModified(new Date())
+                    .save_json(saveJson)
+                    .score(score)
+                    .build();
+        }
+        else {
+            save = saveDb.get();
+            save.setSave_json(saveJson);
+            save.setScore(score);
+            save.setLastModified(new Date());
+        }
+
         save = saveRepository.save(save);
 
         String saveId = save.getSave_id().toString();
 
         return ResponseEntity.ok(new SaveDetectiveCaseResponse(saveId));
-
     }
 
     public DetectiveCaseSaveResponse getDetectiveCaseSave(DetectiveCaseSaveRequest saveDetectiveCaseRequest) {
