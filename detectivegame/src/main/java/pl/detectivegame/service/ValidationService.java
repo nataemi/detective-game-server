@@ -38,7 +38,7 @@ public class ValidationService {
                 ValidatePayload.builder()
                         .warningList(warningList)
                         .wrongList(wrongList)
-                        .status(warningList.isEmpty() && wrongList.isEmpty() ? VerficationStatus.VALID : VerficationStatus.NOTVALID)
+                        .status(wrongList.isEmpty() ? VerficationStatus.VALID : VerficationStatus.NOTVALID)
                         .build();
         return validatePayload;
     }

@@ -60,7 +60,7 @@ public class CreationController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/updateDetectiveCaseInfo")
-    public DetectiveCaseInfoResponse updateDetectiveCaseInfo(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+    public DetectiveCaseInfoResponse updateDetectiveCaseInfo(@Valid @RequestBody DetectiveCaseInfoRequest detectiveCaseInfoRequest) throws Exception {
         DetectiveCaseInfoResponse detectiveCase = detectiveCaseService.updateDetectiveCase(detectiveCaseInfoRequest);
         return detectiveCase;
     }

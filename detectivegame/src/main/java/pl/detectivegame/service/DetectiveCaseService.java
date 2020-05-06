@@ -13,6 +13,7 @@ import pl.detectivegame.model.DAO.Item;
 import pl.detectivegame.model.DAO.Location;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
+import pl.detectivegame.payload.creation.ValidatePayload;
 import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.gameplay.*;
 import pl.detectivegame.repository.*;
@@ -56,6 +57,9 @@ public class DetectiveCaseService {
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    ValidationService validationService;
+
     private static final int QUESTION_VALUE = 10;
 
     public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
@@ -73,8 +77,14 @@ public class DetectiveCaseService {
         return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
     }
 
-    public DetectiveCaseInfoResponse updateDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
+    public DetectiveCaseInfoResponse updateDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) throws Exception {
         DetectiveCaseInfo detectiveCaseInfo = detectiveCaseInfoRepository.getOne(detectiveCaseInfoRequest.getId());
+        if(detectiveCaseInfoRequest.isReady()){
+           ValidatePayload validatePayload = validationService.validateDetectiveCase(detectiveCaseInfoRequest.getId());
+           if(validatePayload.getStatus().equals(VerficationStatus.NOTVALID)){
+               throw new Exception("Cannot create case, verification Status is Invalid");
+           }
+        }
         detectiveCaseInfo.setName(detectiveCaseInfoRequest.getName());
         detectiveCaseInfo.setImage(detectiveCaseInfoRequest.getImage());
         detectiveCaseInfo.setTime(detectiveCaseInfoRequest.getTime());
