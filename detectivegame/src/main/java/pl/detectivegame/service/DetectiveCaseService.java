@@ -146,10 +146,12 @@ public class DetectiveCaseService {
         String caseId;
         String player;
         String saveJson;
+        String score;
         try {
              caseId = saveDetectiveCaseRequest.get("caseId").toString();
              player = saveDetectiveCaseRequest.get("playerId").toString();
              saveJson = saveDetectiveCaseRequest.get("saveJson").toString();
+             score = saveDetectiveCaseRequest.get("score").toString();
         }
         catch (Exception e){
             throw new IllegalArgumentException("Incorrect Request format or value");
@@ -161,6 +163,7 @@ public class DetectiveCaseService {
                 .player(Long.parseLong(player))
                 .lastModified(new Date())
                 .save_json(saveJson)
+                .score(Integer.parseInt(score))
                 .build();
         save = saveRepository.save(save);
 

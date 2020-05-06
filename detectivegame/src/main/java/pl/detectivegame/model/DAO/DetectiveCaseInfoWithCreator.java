@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 @NamedNativeQuery(name = "DetectiveCaseInfoWithCreator.findByUserId",
-        query = "SELECT d.id, d.created, d.modified, d.creator, d.description, d.image, d.name, d.ready, d.time, u.username FROM DETECTIVE_CASE D  JOIN USERS U on D.creator = U.id WHERE D.ID IN (SELECT CASE_ID FROM SAVE WHERE PLAYER = :userId);",
+        query = "SELECT d.id, d.created, d.modified, d.creator, d.description, d.image, d.name, d.ready, d.time, u.username FROM DETECTIVE_CASE D  JOIN USERS U on D.creator = U.id WHERE D.ID IN (SELECT CASE_ID FROM SAVE WHERE PLAYER = :userId and score = -1);",
         resultClass = DetectiveCaseInfoWithCreator.class)
 public class DetectiveCaseInfoWithCreator extends UserDateAudit {
 
@@ -48,6 +48,8 @@ public class DetectiveCaseInfoWithCreator extends UserDateAudit {
     User user;
 
     private String username;
+
+    private int score;
 
     @Transient
     public String getUsername(){
