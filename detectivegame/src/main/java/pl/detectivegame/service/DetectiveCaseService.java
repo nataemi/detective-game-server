@@ -200,6 +200,7 @@ public class DetectiveCaseService {
 
     public AllDetectiveCasesResponse getAllDetectiveCases() {
         List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findAll();
+        saves = saves.stream().filter(DetectiveCaseInfoWithCreator::isReady).collect(Collectors.toList());
         return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
     }
 }
