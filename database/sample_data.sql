@@ -18,14 +18,14 @@ INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("dl
 INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("Halina Abacka", "Nauczycielka w szkole podstawowej nr 46. Mężatka. Kasztanowe włosy i niebieskie oczy. Uczniowie raczej nie darzą jej sympatią. Bardzo wymagająca.", null, null, "P");
 INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("Maciej Kędzia", "Uczeń w szkole podstawowej nr 46. 10 lat. Nadpobudliwy.", null, null, "P");
 
-INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Początek", "Siedzisz na lekcji matematyki. To już druga z rzędu lekcja w tej samej sali. Nie uważałeś za bardzo, ale na początku poprzedniej lekcji zapisałeś w zeszycie chociaż temat. Po godzinie nieuważania nagle orientujesz się, że zadanie jest dosyć trudne, więc wypadałoby sobie je zapisać w zeszycie. Zabierasz się już do zapisywania, ale zaraz... Gdzie jest twój ulubiony (i zresztą jedyny) długopis!?", null, 2, 1, 1);
+INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Początek", "Siedzisz na lekcji matematyki. To już druga z rzędu lekcja w tej samej sali. Nie uważałeś za bardzo, ale na początku poprzedniej lekcji zapisałeś w zeszycie chociaż temat. Po godzinie nieuważania nagle orientujesz się, że zadanie jest dosyć trudne, więc wypadałoby sobie je zapisać w zeszycie. Zabierasz się już do zapisywania, ale zaraz... Gdzie jest twój ulubiony (i zresztą jedyny) długopis!?", null, 0, 1, 1);
 
 UPDATE DETECTIVE_CASE SET frst_action_id = 1 WHERE ID = 1;
 INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,3);
 INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (1,4);
 
 INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Obczaj biurko nauczycielki", "Nauczycielka często pożycza od kogoś długopisy i nigdy nie oddaje. Pod byle pretekstem podchodzisz do jej biurka i sprawdzasz czy nie zabrała twojego długopisu. Na biurku jest ich niestety mnóstwo i ciężko ci dostrzec czy któryś nie jest twoim ulubionym.",
-null, 0, 1, 1);
+null, 2, 1, 1);
 
 INSERT INTO ACTION_ITEM(action_id,item_id) VALUES (2,2);
 
