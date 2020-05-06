@@ -3,6 +3,7 @@ package pl.detectivegame.model.DAO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "answer")
 @Data
+@Getter
 @NoArgsConstructor
 public class Answer {
 

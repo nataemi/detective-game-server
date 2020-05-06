@@ -1,12 +1,12 @@
 package pl.detectivegame.model;
 
-public enum VerficiationStatus {
+public enum VerficationStatus {
     VALID(0),
     NOTVALID(1);
 
     private int status;
 
-    VerficiationStatus(int status) {
+    VerficationStatus(int status) {
         this.status = status;
     }
 

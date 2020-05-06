@@ -1,8 +1,85 @@
-global  pl.detectivegame.model.Action action;
+import pl.detectivegame.model.NewDetectiveCase;
+import pl.detectivegame.model.DAO.Question;
+import pl.detectivegame.model.DAO.Answer;
+import pl.detectivegame.model.LocationConnectionWithName;
+import java.util.List;
+import java.util.stream.Collectors
+import pl.detectivegame.model.Location;
 
-rule "Calculate Taxi Fare - Scenario 1"
-    when
-        eval( 1==1 )
-    then
-        System.out.println( "Rule 01 Works" );
+global java.util.List warningList;
+global java.util.List wrongList;
+
+rule "No start locations"
+when
+    NewDetectiveCase(locations != null && countStartLocations(locations) == 0)
+then
+    wrongList.add("Nie ma lokacji startowej");
 end
+
+rule "More than one start location"
+when
+    NewDetectiveCase(locations != null && countStartLocations(locations) > 0)
+then
+    wrongList.add("Jest więcej niż jedna lokacja startowa");
+end
+
+rule "No end test"
+when
+    NewDetectiveCase(test == null || test.isEmpty())
+then
+    wrongList.add("Nie utworzono testu końcowego");
+end
+
+rule "No locations"
+when
+    NewDetectiveCase(locations == null || locations.isEmpty())
+then
+    wrongList.add("Nie utworzono żadnej lokacji");
+end
+
+rule "No actions"
+when
+    NewDetectiveCase(locations == null || locations.isEmpty())
+then
+    wrongList.add("Nie utworzono żadnej akcji");
+end
+
+rule "Question doesnt have any answers"
+when
+    NewDetectiveCase($questions: test)
+    Question(answers == null || answers.isEmpty()) from $questions
+then
+    wrongList.add("Pytanie nie ma odpowiedzi");
+end
+
+rule "Question has more than one correct answer"
+when
+    NewDetectiveCase($questions: test)
+    Question(countCorrectAnswers(answers) > 1) from $questions
+then
+    wrongList.add("Pytanie ma wiecej niz jedna prawidlowa odpowiedz");
+end
+
+rule "Question doesnt have any correct answers"
+when
+      NewDetectiveCase($questions: test)
+      Question(countCorrectAnswers(answers) == 0) from $questions
+then
+    wrongList.add("Pytanie nie ma żadnej prawidłowej odpowiedzi");
+end
+
+//TODO
+//czy do kazdej lokacji da sie dotrzec
+//czy kazda lokacje da sie odkryc
+//czy do kazdej akcji da sie dotrzec
+//czy do kazdego itemka da sie dotrzec
+//czy do kazdej osoby da sie dotrzec
+
+
+function int countCorrectAnswers(List answers){
+    return Math.toIntExact(answers.stream().filter(answer -> ((Answer) answer).isCorrect()).count());
+}
+
+function int countStartLocations(List locations){
+    return Math.toIntExact(locations.stream().filter(answer -> ((Location) answer).isStart()).count());
+}

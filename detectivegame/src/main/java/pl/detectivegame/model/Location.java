@@ -28,7 +28,6 @@ public class Location {
 
     private boolean revealed;
 
-    @JsonIgnore
     private boolean isStart;
 }
 
