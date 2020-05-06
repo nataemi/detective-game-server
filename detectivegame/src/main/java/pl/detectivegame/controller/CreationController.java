@@ -1,9 +1,13 @@
 package pl.detectivegame.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.detectivegame.model.Action;
 import pl.detectivegame.payload.ApiResponse;
 import pl.detectivegame.payload.creation.*;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
@@ -43,6 +47,9 @@ public class CreationController {
 
     @Autowired
     ActionService actionService;
+
+    @Autowired
+    ValidationService validationService;
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/createDetectiveCaseInfo")
@@ -171,5 +178,10 @@ public class CreationController {
     public ApiResponse deleteAction(@Valid @RequestBody ActionPayload actionPayload) {
         actionService.deleteAction(actionPayload);
         return new ApiResponse(true, "Action deleted");
+    }
+
+    @GetMapping("/validate/{caseId}")
+    public ValidatePayload validateDetectiveCase(@PathVariable(value = "caseId") Long caseId) {
+        return validationService.validateDetectiveCase(caseId);
     }
 }

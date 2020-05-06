@@ -2,6 +2,7 @@ package pl.detectivegame.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.detectivegame.model.Action;
 import pl.detectivegame.model.DAO.*;
 import pl.detectivegame.model.ItemType;
 import pl.detectivegame.model.Successor;
@@ -39,7 +40,7 @@ public class ActionService {
 
 
     public void deleteAction(ActionPayload actionPayload) {
-        Action actionDAO = getActionDAOWithId(actionPayload);
+        pl.detectivegame.model.DAO.Action actionDAO = getActionDAOWithId(actionPayload);
         Long actionId = actionDAO.getActionId();
         deleteUnusedActionActions(actionId);
         deleteActionItems(actionId);
@@ -62,27 +63,27 @@ public class ActionService {
         actionActionRepository.deleteAll(actionActionList);
     }
 
-    private Action getActionDAO(ActionPayload actionPayload) {
+    private pl.detectivegame.model.DAO.Action getActionDAO(ActionPayload actionPayload) {
         pl.detectivegame.model.Action action = actionPayload.getAction();
         Location location = locationRepository.findByNameEqualsAndCaseIdEquals(action.getLocation(), action.getCaseId());
         return ActionMapper.mapWithoutSuccesorsAndId(action, location);
     }
 
-    private Action getActionDAOWithId(ActionPayload actionPayload) {
-        pl.detectivegame.model.Action action = actionPayload.getAction();
+    private pl.detectivegame.model.DAO.Action getActionDAOWithId(ActionPayload actionPayload) {
+        Action action = actionPayload.getAction();
         Location location = locationRepository.findByNameEqualsAndCaseIdEquals(action.getLocation(), action.getCaseId());
         return ActionMapper.mapWithoutSuccesors(action, location);
     }
 
     public ActionPayload createAction(ActionPayload actionPayload) {
-        Action actionDAO = getActionDAO(actionPayload);
+        pl.detectivegame.model.DAO.Action actionDAO = getActionDAO(actionPayload);
         actionDAO = actionRepository.save(actionDAO);
         actionPayload.setAction(ActionMapper.map(actionDAO));
         return actionPayload;
     }
 
     public ActionPayload updateAction(ActionPayload actionPayload) {
-        Action actionDAO = updateActionInfo(actionPayload);
+        pl.detectivegame.model.DAO.Action actionDAO = updateActionInfo(actionPayload);
         actionDAO = actionRepository.save(actionDAO);
         List<Successor> successors = actionPayload.getAction().getSuccessors();
         Long actionId = actionDAO.getActionId();
@@ -91,7 +92,7 @@ public class ActionService {
         return actionPayload;
     }
 
-    private void createResponse(ActionPayload actionPayload, Action actionDAO, Long actionId) {
+    private void createResponse(ActionPayload actionPayload, pl.detectivegame.model.DAO.Action actionDAO, Long actionId) {
         itemRepository.flush();
         List<Item> allItems = itemRepository.findAllInCase(actionDAO.getCaseId());
         List<pl.detectivegame.model.Item> items = getItems(allItems);
@@ -99,9 +100,9 @@ public class ActionService {
         actionPayload.setAction(ActionMapper.map(actionRepository.findById(actionId).get(),items));
     }
 
-    private Action updateActionInfo(ActionPayload actionPayload) {
-        Action requestAction = getActionDAOWithId(actionPayload);
-        Action actionDAO = actionRepository.getOne(actionPayload.getAction().getActionId());
+    private pl.detectivegame.model.DAO.Action updateActionInfo(ActionPayload actionPayload) {
+        pl.detectivegame.model.DAO.Action requestAction = getActionDAOWithId(actionPayload);
+        pl.detectivegame.model.DAO.Action actionDAO = actionRepository.getOne(actionPayload.getAction().getActionId());
         actionDAO.setLocation(requestAction.getLocation());
         actionDAO.setDescription(requestAction.getDescription());
         actionDAO.setTime(requestAction.getTime());

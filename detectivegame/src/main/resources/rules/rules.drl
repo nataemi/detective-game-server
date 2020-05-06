@@ -1,0 +1,8 @@
+global  pl.detectivegame.model.Action action;
+
+rule "Calculate Taxi Fare - Scenario 1"
+    when
+        eval( 1==1 )
+    then
+        System.out.println( "Rule 01 Works" );
+end
