@@ -40,8 +40,12 @@ public class DetectiveCaseInfo extends UserDateAudit {
     private int mpPerDay;
 
     @Column(name = "frst_action_id")
-    private long frstActionId;
+    private Long frstActionId;
 
     @Column(name = "bgn_date", nullable = false)
     private Timestamp bgnDate;
+
+    private int time;
+
+    private int score;
 }

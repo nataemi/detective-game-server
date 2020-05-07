@@ -76,7 +76,10 @@ public class DetectiveCaseService {
                         .description(detectiveCaseInfoRequest.getDescription())
                         .ready(detectiveCaseInfoRequest.isReady())
                         .bgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
+                        .score(0)  //TODO to nie powinno byc potrzebne
+                        .time(detectiveCaseInfoRequest.getMaxDays() * detectiveCaseInfoRequest.getMpPerDay())
                         .build();
+
         detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
         User creator = getCreator(detectiveCaseInfo);
         return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);
