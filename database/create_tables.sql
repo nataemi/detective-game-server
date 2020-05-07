@@ -1,3 +1,32 @@
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_users_username` (`username`),
+  UNIQUE KEY `uk_users_email` (`email`)
+);
+
+CREATE TABLE IF NOT EXISTS roles (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  name varchar(60) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_roles_name (name)
+);
+
+CREATE TABLE IF NOT EXISTS user_roles (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_user_roles_role_id` (`role_id`),
+  CONSTRAINT `fk_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  CONSTRAINT `fk_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
+
 CREATE TABLE IF NOT EXISTS detective_case (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   creator bigint(20) NOT NULL,
@@ -7,7 +36,8 @@ CREATE TABLE IF NOT EXISTS detective_case (
   modified timestamp DEFAULT CURRENT_TIMESTAMP,
   image VARCHAR(255),
   ready BOOL DEFAULT FALSE,
-  time INT NOT NULL,
+  max_days INT NOT NULL DEFAULT 1,
+  mp_per_day INT NOT NULL DEFAULT 32,
   PRIMARY KEY (id),
   CONSTRAINT fk_creator FOREIGN KEY (creator) REFERENCES users (id));
   
@@ -17,7 +47,7 @@ CREATE TABLE IF NOT EXISTS detective_case (
   case_id bigint(20) NOT NULL,
   last_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   save_json JSON,
-  score INT,
+  score INT DEFAULT -1,
   PRIMARY KEY (save_id),
   CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES users (id),
   CONSTRAINT fk_save_case FOREIGN KEY (case_id) REFERENCES detective_case (id));
@@ -94,7 +124,7 @@ CREATE TABLE IF NOT EXISTS action_location(
   CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(question_id)); 
 
 
-ALTER TABLE location ADD COLUMN is_Start boolean;
+ALTER TABLE location ADD COLUMN is_start boolean;
 ALTER TABLE detective_case ADD COLUMN bgn_date timestamp DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE action ADD COLUMN case_id bigint(20) NOT NULL;
 ALTER TABLE action ADD CONSTRAINT fk_case_action FOREIGN KEY (case_id) REFERENCES detective_case(id);
@@ -104,3 +134,5 @@ ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
 ALTER TABLE item ADD COLUMN exam_cost int NOT NULL DEFAULT 1;
 ALTER TABLE location ADD UNIQUE unq_name_for_case(case_id,name);
+
+
