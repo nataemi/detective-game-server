@@ -75,7 +75,7 @@ public class DetectiveCaseService {
                         .mpPerDay(detectiveCaseInfoRequest.getMpPerDay())
                         .description(detectiveCaseInfoRequest.getDescription())
                         .ready(detectiveCaseInfoRequest.isReady())
-                        .bgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
+                        .bgnDate(detectiveCaseInfoRequest.getBgnDt() == null ? null :new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
                         .score(0)  //TODO to nie powinno byc potrzebne
                         .time(detectiveCaseInfoRequest.getMaxDays() * detectiveCaseInfoRequest.getMpPerDay())
                         .build();
@@ -90,7 +90,7 @@ public class DetectiveCaseService {
         if(detectiveCaseInfoRequest.isReady()){
            ValidatePayload validatePayload = validationService.validateDetectiveCase(detectiveCaseInfoRequest.getId());
            if(validatePayload.getStatus().equals(VerficationStatus.NOTVALID)){
-               throw new Exception("Cannot create case, verification Status is Invalid");
+               throw new Exception("Cannot change case status to ready, verification Status is Invalid");
            }
         }
         detectiveCaseInfo.setName(detectiveCaseInfoRequest.getName());

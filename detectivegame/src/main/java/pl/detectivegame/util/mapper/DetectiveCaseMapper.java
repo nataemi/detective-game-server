@@ -16,13 +16,16 @@ public class DetectiveCaseMapper {
                                 .username(creator.getUsername())
                                 .build())
                         .creationDateTime(detectiveCaseInfo.getCreated())
+                        .modifiedDateTime(detectiveCaseInfo.getModified())
                         .description(detectiveCaseInfo.getDescription())
                         .image(detectiveCaseInfo.getImage())
                         .ready(detectiveCaseInfo.isReady())
                         .time(detectiveCaseInfo.getMpPerDay() * detectiveCaseInfo.getMaxDays())
                         .mpPerDay(detectiveCaseInfo.getMpPerDay())
                         .days(detectiveCaseInfo.getMaxDays())
+                        .name(detectiveCaseInfo.getName())
                         .id(detectiveCaseInfo.getId())
+                        .bgnDt(detectiveCaseInfo.getBgnDate())
                         .build();
         return detectiveCaseInfoResponse;
     }

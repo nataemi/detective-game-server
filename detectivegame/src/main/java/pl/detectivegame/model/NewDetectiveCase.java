@@ -17,7 +17,7 @@ public class NewDetectiveCase {
     int movementPoints;
     Date date;
     @JsonProperty(value = "frst_action_id")
-    long frstActionId;
+    Long frstActionId;
     @JsonProperty(value = "max_score")
     int maxScore;
     @JsonProperty(value = "max_days")
