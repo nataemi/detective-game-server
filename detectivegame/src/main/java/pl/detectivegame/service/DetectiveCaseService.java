@@ -60,6 +60,9 @@ public class DetectiveCaseService {
     @Autowired
     ValidationService validationService;
 
+    @Autowired
+    OptimalPathService optimalPathService;
+
     private static final int QUESTION_VALUE = 10;
 
     public DetectiveCaseInfoResponse createDetectiveCase(DetectiveCaseInfoRequest detectiveCaseInfoRequest) {
@@ -121,6 +124,7 @@ public class DetectiveCaseService {
         List<Item> allItems = itemRepository.findAllInCase(detectiveCaseId);
         List<pl.detectivegame.model.Item> items = getItems(allItems);
         List<Person> people = getPeople(allItems);
+        List<OptimalPath> optimalPaths = optimalPathService.calculateOptimalPaths(paths,locations);
 
         DetectiveCaseResponse detectiveCaseResponse =
                 DetectiveCaseResponse.builder().newDetectiveCase(
@@ -135,6 +139,7 @@ public class DetectiveCaseService {
                                 .items(items)
                                 .people(people)
                                 .test(test)
+                                .optimalPaths(optimalPaths)
                                 .maxScore(test.size() * QUESTION_VALUE)
                                 .build()).build();
         return detectiveCaseResponse;

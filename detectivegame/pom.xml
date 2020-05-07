@@ -102,6 +102,12 @@
             <artifactId>kie-ci</artifactId>
             <version>${runtime.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>es.usc.citius.hipster</groupId>
+            <artifactId>hipster-all</artifactId>
+            <version>1.0.0-rc2</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -27,4 +27,5 @@ public class NewDetectiveCase {
     List<LocationConnectionWithName> paths;
     List<Person> people;
     List<Question> test;
+    List<OptimalPath> optimalPaths;
 }

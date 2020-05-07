@@ -1,5 +1,10 @@
 package pl.detectivegame;
 
+import es.usc.citius.hipster.algorithm.Hipster;
+import es.usc.citius.hipster.graph.GraphBuilder;
+import es.usc.citius.hipster.graph.GraphSearchProblem;
+import es.usc.citius.hipster.graph.HipsterDirectedGraph;
+import es.usc.citius.hipster.model.problem.SearchProblem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
