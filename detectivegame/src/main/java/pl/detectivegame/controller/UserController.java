@@ -15,6 +15,7 @@ import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.DetectiveCaseWithCreatorNameRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
+import pl.detectivegame.util.mapper.DetectiveCaseInfoWithCreatorMapper;
 
 import java.util.List;
 
@@ -56,14 +57,14 @@ public class UserController {
 
     @GetMapping("/createdDetectiveCases/{userId}")
     public AllDetectiveCasesResponse getAllCreatedDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
-        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findByCreator(userId);
-        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
+        List<DetectiveCaseInfoWithCreator> cases = detectiveCaseWithCreatorNameRepository.findByCreator(userId);
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(DetectiveCaseInfoWithCreatorMapper.map(cases)).build();
     }
 
     @GetMapping("/activeDetectiveCases/{userId}")
     public AllDetectiveCasesResponse getAllActiveDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
-        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findByUserId(userId);
-        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
+        List<DetectiveCaseInfoWithCreator> cases = detectiveCaseWithCreatorNameRepository.findByUserId(userId);
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(DetectiveCaseInfoWithCreatorMapper.map(cases)).build();
     }
 
 

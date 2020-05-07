@@ -15,6 +15,8 @@ public class DetectiveCaseInfoResponse {
     private String image;
     private boolean ready;
     private int time;
+    private int days;
+    private int mpPerDay;
     private UserSummaryResponse createdBy;
     private Instant creationDateTime;
     private Instant modifiedDateTime;

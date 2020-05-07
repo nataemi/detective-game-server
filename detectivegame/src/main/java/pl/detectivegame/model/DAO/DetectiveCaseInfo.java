@@ -33,7 +33,11 @@ public class DetectiveCaseInfo extends UserDateAudit {
 
     private boolean ready;
 
-    private int time;
+    @Column(name = "max_days")
+    private int maxDays;
+
+    @Column(name = "mp_per_day")
+    private int mpPerDay;
 
     @Column(name = "frst_action_id")
     private long frstActionId;

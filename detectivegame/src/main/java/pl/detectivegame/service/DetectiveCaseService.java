@@ -9,6 +9,7 @@ import pl.detectivegame.exception.ResourceNotFoundException;
 import pl.detectivegame.model.*;
 import pl.detectivegame.model.DAO.*;
 import pl.detectivegame.model.DAO.Action;
+import pl.detectivegame.model.DAO.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.model.DAO.Item;
 import pl.detectivegame.model.DAO.Location;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoRequest;
@@ -70,7 +71,8 @@ public class DetectiveCaseService {
                 DetectiveCaseInfo.builder()
                         .image(detectiveCaseInfoRequest.getImage())
                         .name(detectiveCaseInfoRequest.getName())
-                        .time(detectiveCaseInfoRequest.getTime())
+                        .maxDays(detectiveCaseInfoRequest.getMaxDays())
+                        .mpPerDay(detectiveCaseInfoRequest.getMpPerDay())
                         .description(detectiveCaseInfoRequest.getDescription())
                         .ready(detectiveCaseInfoRequest.isReady())
                         .bgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
@@ -90,7 +92,8 @@ public class DetectiveCaseService {
         }
         detectiveCaseInfo.setName(detectiveCaseInfoRequest.getName());
         detectiveCaseInfo.setImage(detectiveCaseInfoRequest.getImage());
-        detectiveCaseInfo.setTime(detectiveCaseInfoRequest.getTime());
+        detectiveCaseInfo.setMaxDays(detectiveCaseInfoRequest.getMaxDays());
+        detectiveCaseInfo.setMpPerDay(detectiveCaseInfo.getMpPerDay());
         detectiveCaseInfo.setBgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()));
         detectiveCaseInfo.setDescription(detectiveCaseInfoRequest.getDescription());
         detectiveCaseInfo.setReady(detectiveCaseInfoRequest.isReady());
@@ -130,7 +133,9 @@ public class DetectiveCaseService {
                 DetectiveCaseResponse.builder().newDetectiveCase(
                         NewDetectiveCase.builder()
                                 .actions(ActionMapper.map(actions,items))
-                                .movementPoints(detectiveCaseInfo.getTime())
+                                .movementPoints(detectiveCaseInfo.getMaxDays() * detectiveCaseInfo.getMpPerDay())
+                                .maxDays(detectiveCaseInfo.getMaxDays())
+                                .mpPerDay(detectiveCaseInfo.getMpPerDay())
                                 .frstActionId(detectiveCaseInfo.getFrstActionId())
                                 .date(detectiveCaseInfo.getBgnDate())
                                 .location(getFirstLocationName(locations))
@@ -218,8 +223,8 @@ public class DetectiveCaseService {
     }
 
     public AllDetectiveCasesResponse getAllDetectiveCases() {
-        List<DetectiveCaseInfoWithCreator> saves = detectiveCaseWithCreatorNameRepository.findAll();
-        saves = saves.stream().filter(DetectiveCaseInfoWithCreator::isReady).collect(Collectors.toList());
-        return AllDetectiveCasesResponse.builder().detectiveCaseList(saves).build();
+        List<DetectiveCaseInfoWithCreator> cases = detectiveCaseWithCreatorNameRepository.findAll();
+        cases = cases.stream().filter(DetectiveCaseInfoWithCreator::isReady).collect(Collectors.toList());
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(DetectiveCaseInfoWithCreatorMapper.map(cases)).build();
     }
 }

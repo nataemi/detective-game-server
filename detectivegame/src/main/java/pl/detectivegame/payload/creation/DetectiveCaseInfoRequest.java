@@ -17,7 +17,11 @@ public class DetectiveCaseInfoRequest {
 
     private boolean ready;
 
-    private int time;
+    private int maxDays;
+
+    private int mpPerDay;
 
     private Date bgnDt;
+
+
 }
