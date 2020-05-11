@@ -127,7 +127,7 @@ public class DetectiveCaseService {
                 findAllByLocationConnectionIdentity_FromIdIn(locationsDAO.stream().map(Location::getLocationId).collect(Collectors.toList()));
         List<LocationConnectionWithName> paths = LocationConnectionResponseMapper.map(locationConnections, locationsDAO);
         List<Question> test = questionRepository.findByCaseId(detectiveCaseId);
-        List<Item> allItems = itemRepository.findAllInCase(detectiveCaseId);
+        List<Item> allItems = itemRepository.findAllByCaseId(detectiveCaseId);
         List<pl.detectivegame.model.Item> items = getItems(allItems);
         List<Person> people = getPeople(allItems);
         List<OptimalPath> optimalPaths = optimalPathService.calculateOptimalPaths(paths,locations);

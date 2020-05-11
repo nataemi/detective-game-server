@@ -16,6 +16,7 @@ public class ItemMapper {
                 .name(item.getName())
                 .revealed(false)
                 .examCost(item.getExamCost())
+                .caseId(item.getCaseId())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class ItemMapper {
                 .image(item.getImage())
                 .fullname(item.getName())
                 .revealed(false)
+                .caseId(item.getCaseId())
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class ItemMapper {
                 .image(item.getImage())
                 .examResult(item.getExamineInfo())
                 .examCost(item.getExamCost())
+                .caseId(item.getCaseId())
                 .build();
     }
 
@@ -48,6 +51,7 @@ public class ItemMapper {
                 .itemId(person.getPersonId())
                 .name(person.getFullname())
                 .typeOfItem(ItemType.PERSON.getType())
+                .caseId(person.getCaseId())
                 .build();
     }
 }

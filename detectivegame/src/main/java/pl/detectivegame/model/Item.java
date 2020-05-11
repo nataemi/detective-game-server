@@ -29,4 +29,6 @@ public class Item {
     @JsonProperty("exam_cost")
     private int examCost;
 
+    private long caseId;
+
 }

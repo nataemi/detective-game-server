@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<Item> findAllInCase(Long detectiveCaseId);
+    List<Item> findAllByCaseId(Long detectiveCaseId);
 }

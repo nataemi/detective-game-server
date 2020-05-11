@@ -22,5 +22,5 @@ public class Person {
 
     private boolean revealed;
 
-
+    private long caseId;
 }

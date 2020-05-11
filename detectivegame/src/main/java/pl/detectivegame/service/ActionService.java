@@ -94,7 +94,7 @@ public class ActionService {
 
     private void createResponse(ActionPayload actionPayload, pl.detectivegame.model.DAO.Action actionDAO, Long actionId) {
         itemRepository.flush();
-        List<Item> allItems = itemRepository.findAllInCase(actionDAO.getCaseId());
+        List<Item> allItems = itemRepository.findAllByCaseId(actionDAO.getCaseId());
         List<pl.detectivegame.model.Item> items = getItems(allItems);
         actionRepository.flush();
         actionPayload.setAction(ActionMapper.map(actionRepository.findById(actionId).get(),items));

@@ -14,9 +14,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NamedNativeQuery(name = "Item.findAllInCase",
-        query = "SELECT * FROM ITEM i WHERE i.item_id IN (SELECT item_id FROM ACTION_ITEM WHERE ACTION_ID IN (SELECT ACTION_ID FROM ACTION WHERE CASE_ID = :detectiveCaseId));",
-        resultClass = Item.class)
 public class Item {
 
     @Id
@@ -39,5 +36,8 @@ public class Item {
 
     @Column(name = "exam_cost")
     private int examCost;
+
+    @Column(name= "case_id")
+    private long caseId;
 
 }
