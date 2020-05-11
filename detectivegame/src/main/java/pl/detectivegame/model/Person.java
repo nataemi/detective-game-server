@@ -22,5 +22,6 @@ public class Person {
 
     private boolean revealed;
 
+    @JsonProperty("case_id")
     private long caseId;
 }
