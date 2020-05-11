@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class LocationConnectionIdentity implements Serializable {
 
     @Column(name = "from_id")
-    @JsonProperty("lcoation1")
+    @JsonProperty("location1")
     private long fromId;
 
     @Column(name = "to_id")
