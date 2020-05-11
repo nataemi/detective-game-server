@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.detectivegame.model.Action;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.payload.ApiResponse;
 import pl.detectivegame.payload.creation.*;
+import pl.detectivegame.payload.gameplay.DetectiveCaseResponse;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.*;
@@ -183,5 +185,10 @@ public class CreationController {
     @GetMapping("/validate/{caseId}")
     public ValidatePayload validateDetectiveCase(@PathVariable(value = "caseId") Long caseId) {
         return validationService.validateDetectiveCase(caseId);
+    }
+
+    @GetMapping("/detectiveCaseInfo/{caseId}")
+    public DetectiveCaseInfoResponse getDetectiveCaseInfo(@PathVariable(value = "caseId") Long caseId) {
+        return detectiveCaseService.getDetectiveCaseInfoById(caseId);
     }
 }
