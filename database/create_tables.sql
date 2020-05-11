@@ -134,5 +134,8 @@ ALTER TABLE action ADD COLUMN location bigint(20);
 ALTER TABLE action ADD CONSTRAINT fk_action_location FOREIGN KEY (location) REFERENCES location(location_id);
 ALTER TABLE item ADD COLUMN exam_cost int NOT NULL DEFAULT 1;
 ALTER TABLE location ADD UNIQUE unq_name_for_case(case_id,name);
+ALTER TABLE item ADD COLUMN case_id bigint(20);
+ALTER TABLE item ADD CONSTRAINT fk_item_case FOREIGN KEY (case_id) REFERENCES detective_case(id);
+
 
 

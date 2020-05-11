@@ -12,11 +12,11 @@ INSERT INTO LOCATION(case_id, name, description, image, is_Start) VALUES (1, "do
 
 INSERT INTO LOCATION_CONNECTION(from_id, to_id, time) VALUES (1,2,4);
 
-INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("dlugopis kumpla", "Prosty dlugopis z czarnym atramentem", null, "dlugopis jest identyczny do twojego. Nawet tak samo nadgryziony. Podejrzane.", "I");
-INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("dlugopisy nauczyciela", "Sterta dlugopisow lezaca na biurku nauczyciela. Jest ich na tyle duzo ze ciezko powiedziec czy znajduje się tam twój.", null, "Raczej zaden z nich nie wyglada na twoj.", "I");
+INSERT INTO ITEM(name, description, image, exam_result, type_of_item, case_id) VALUES("dlugopis kumpla", "Prosty dlugopis z czarnym atramentem", null, "dlugopis jest identyczny do twojego. Nawet tak samo nadgryziony. Podejrzane.", "I", 1);
+INSERT INTO ITEM(name, description, image, exam_result, type_of_item, case_id) VALUES("dlugopisy nauczyciela", "Sterta dlugopisow lezaca na biurku nauczyciela. Jest ich na tyle duzo ze ciezko powiedziec czy znajduje się tam twój.", null, "Raczej zaden z nich nie wyglada na twoj.", "I", 1);
 
-INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("Halina Abacka", "Nauczycielka w szkole podstawowej nr 46. Mężatka. Kasztanowe włosy i niebieskie oczy. Uczniowie raczej nie darzą jej sympatią. Bardzo wymagająca.", null, null, "P");
-INSERT INTO ITEM(name, description, image, exam_result, type_of_item) VALUES("Maciej Kędzia", "Uczeń w szkole podstawowej nr 46. 10 lat. Nadpobudliwy.", null, null, "P");
+INSERT INTO ITEM(name, description, image, exam_result, type_of_item, case_id) VALUES("Halina Abacka", "Nauczycielka w szkole podstawowej nr 46. Mężatka. Kasztanowe włosy i niebieskie oczy. Uczniowie raczej nie darzą jej sympatią. Bardzo wymagająca.", null, null, "P", 1);
+INSERT INTO ITEM(name, description, image, exam_result, type_of_item, case_id) VALUES("Maciej Kędzia", "Uczeń w szkole podstawowej nr 46. 10 lat. Nadpobudliwy.", null, null, "P", 1);
 
 INSERT INTO ACTION(name, description, image, time, case_id, location) VALUES ("Początek", "Siedzisz na lekcji matematyki. To już druga z rzędu lekcja w tej samej sali. Nie uważałeś za bardzo, ale na początku poprzedniej lekcji zapisałeś w zeszycie chociaż temat. Po godzinie nieuważania nagle orientujesz się, że zadanie jest dosyć trudne, więc wypadałoby sobie je zapisać w zeszycie. Zabierasz się już do zapisywania, ale zaraz... Gdzie jest twój ulubiony (i zresztą jedyny) długopis!?", null, 0, 1, 1);
 
