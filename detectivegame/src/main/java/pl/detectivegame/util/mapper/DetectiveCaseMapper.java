@@ -1,11 +1,18 @@
 package pl.detectivegame.util.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.detectivegame.exception.ResourceNotFoundException;
 import pl.detectivegame.model.DAO.DetectiveCaseInfo;
 import pl.detectivegame.model.DAO.User;
+import pl.detectivegame.model.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
 import pl.detectivegame.payload.user.UserSummaryResponse;
+import pl.detectivegame.repository.UserRepository;
+
+import java.util.List;
 
 public class DetectiveCaseMapper {
+
 
     public static DetectiveCaseInfoResponse mapDetectiveCasetoDetectiveCaseResponse(DetectiveCaseInfo detectiveCaseInfo, User creator) {
         DetectiveCaseInfoResponse detectiveCaseInfoResponse =
@@ -29,4 +36,5 @@ public class DetectiveCaseMapper {
                         .build();
         return detectiveCaseInfoResponse;
     }
+
 }

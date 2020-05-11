@@ -44,8 +44,4 @@ public class DetectiveCaseInfo extends UserDateAudit {
 
     @Column(name = "bgn_date", nullable = false)
     private Timestamp bgnDate;
-
-    private int time;
-
-    private int score;
 }

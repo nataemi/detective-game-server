@@ -16,6 +16,7 @@ public class DetectiveCaseInfoWithCreatorMapper {
                 .movementPoints(dao.getMaxDays() * dao.getMpPerDay())
                 .mpPerDay(dao.getMpPerDay())
                 .name(dao.getName())
+                .username(dao.getUsername())
                 .ready(dao.isReady())
                 .score(dao.getScore())
                 .build();

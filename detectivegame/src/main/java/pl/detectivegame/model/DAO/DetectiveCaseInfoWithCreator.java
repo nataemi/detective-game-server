@@ -1,7 +1,5 @@
 package pl.detectivegame.model.DAO;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "detective_case")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,17 +43,7 @@ public class DetectiveCaseInfoWithCreator extends UserDateAudit {
     @Column(name = "mp_per_day")
     private int mpPerDay;
 
-    @ManyToOne
-    @JoinColumn(name="creator", nullable=false, insertable = false, updatable = false)
-    @JsonIgnore
-    User user;
-
     private String username;
 
     private int score;
-
-    @Transient
-    public String getUsername(){
-        return getUser().getUsername();
-    };
 }

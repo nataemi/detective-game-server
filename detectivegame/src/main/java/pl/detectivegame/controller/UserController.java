@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.detectivegame.exception.ResourceNotFoundException;
+import pl.detectivegame.model.DAO.DetectiveCaseInfo;
 import pl.detectivegame.model.DAO.DetectiveCaseInfoWithCreator;
 import pl.detectivegame.model.DAO.User;
-import pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse;
+import pl.detectivegame.payload.creation.DetectiveCaseInfoResponse;
+import pl.detectivegame.payload.user.AllDetectiveCasesResponse;
 import pl.detectivegame.payload.user.UserProfileResponse;
 import pl.detectivegame.repository.DetectiveCaseInfoRepository;
 import pl.detectivegame.repository.DetectiveCaseWithCreatorNameRepository;
 import pl.detectivegame.repository.UserRepository;
 import pl.detectivegame.service.DetectiveCaseService;
 import pl.detectivegame.util.mapper.DetectiveCaseInfoWithCreatorMapper;
+import pl.detectivegame.util.mapper.DetectiveCaseMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -56,9 +60,10 @@ public class UserController {
     }
 
     @GetMapping("/createdDetectiveCases/{userId}")
-    public AllDetectiveCasesResponse getAllCreatedDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
-        List<DetectiveCaseInfoWithCreator> cases = detectiveCaseWithCreatorNameRepository.findByCreator(userId);
-        return AllDetectiveCasesResponse.builder().detectiveCaseList(DetectiveCaseInfoWithCreatorMapper.map(cases)).build();
+    public pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse getAllCreatedDetectiveCasesForUser(@PathVariable(value = "userId") Long userId) {
+        List<DetectiveCaseInfo> cases = detectiveCaseInfoRepository.findByCreator(userId);
+        List<DetectiveCaseInfoResponse> responseList = detectiveCaseService.getDetectiveCaseInfoResponses(cases);
+        return pl.detectivegame.payload.dashboard.AllDetectiveCasesResponse.builder().detectiveCaseList(responseList).build();
     }
 
     @GetMapping("/activeDetectiveCases/{userId}")

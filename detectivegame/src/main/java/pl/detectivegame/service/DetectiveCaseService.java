@@ -21,6 +21,7 @@ import pl.detectivegame.repository.*;
 import pl.detectivegame.util.mapper.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -76,8 +77,6 @@ public class DetectiveCaseService {
                         .description(detectiveCaseInfoRequest.getDescription())
                         .ready(detectiveCaseInfoRequest.isReady())
                         .bgnDate(detectiveCaseInfoRequest.getBgnDt() == null ? null :new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
-                        .score(0)  //TODO to nie powinno byc potrzebne
-                        .time(detectiveCaseInfoRequest.getMaxDays() * detectiveCaseInfoRequest.getMpPerDay())
                         .build();
 
         detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
@@ -226,8 +225,19 @@ public class DetectiveCaseService {
     }
 
     public AllDetectiveCasesResponse getAllDetectiveCases() {
-        List<DetectiveCaseInfoWithCreator> cases = detectiveCaseWithCreatorNameRepository.findAll();
-        cases = cases.stream().filter(DetectiveCaseInfoWithCreator::isReady).collect(Collectors.toList());
-        return AllDetectiveCasesResponse.builder().detectiveCaseList(DetectiveCaseInfoWithCreatorMapper.map(cases)).build();
+        List<DetectiveCaseInfo> cases = detectiveCaseInfoRepository.findAll();
+        cases = cases.stream().filter(DetectiveCaseInfo::isReady).collect(Collectors.toList());
+        List<DetectiveCaseInfoResponse> responseList = getDetectiveCaseInfoResponses(cases);
+        return AllDetectiveCasesResponse.builder().detectiveCaseList(responseList).build();
     }
+
+    public List<DetectiveCaseInfoResponse> getDetectiveCaseInfoResponses(List<DetectiveCaseInfo> cases) {
+        List<DetectiveCaseInfoResponse> responseList = new ArrayList<>();
+        for(DetectiveCaseInfo caseInfo : cases){
+            User creator = getCreator(caseInfo);
+            responseList.add(DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(caseInfo,creator));
+        }
+        return responseList;
+    }
+
 }
