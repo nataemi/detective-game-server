@@ -77,6 +77,7 @@ public class DetectiveCaseService {
                         .description(detectiveCaseInfoRequest.getDescription())
                         .ready(detectiveCaseInfoRequest.isReady())
                         .bgnDate(detectiveCaseInfoRequest.getBgnDt() == null ? null :new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()))
+                        .frstActionId(detectiveCaseInfoRequest.getFrstActionId())
                         .build();
 
         detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
@@ -99,6 +100,7 @@ public class DetectiveCaseService {
         detectiveCaseInfo.setBgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()));
         detectiveCaseInfo.setDescription(detectiveCaseInfoRequest.getDescription());
         detectiveCaseInfo.setReady(detectiveCaseInfoRequest.isReady());
+        detectiveCaseInfo.setFrstActionId(detectiveCaseInfoRequest.getFrstActionId());
         detectiveCaseInfo = detectiveCaseInfoRepository.save(detectiveCaseInfo);
         User creator = getCreator(detectiveCaseInfo);
         return DetectiveCaseMapper.mapDetectiveCasetoDetectiveCaseResponse(detectiveCaseInfo, creator);

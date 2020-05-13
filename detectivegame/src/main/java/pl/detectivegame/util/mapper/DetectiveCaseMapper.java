@@ -29,6 +29,7 @@ public class DetectiveCaseMapper {
                         .ready(detectiveCaseInfo.isReady())
                         .time(detectiveCaseInfo.getMpPerDay() * detectiveCaseInfo.getMaxDays())
                         .mpPerDay(detectiveCaseInfo.getMpPerDay())
+                        .frstActionId(detectiveCaseInfo.getFrstActionId())
                         .days(detectiveCaseInfo.getMaxDays())
                         .name(detectiveCaseInfo.getName())
                         .id(detectiveCaseInfo.getId())
