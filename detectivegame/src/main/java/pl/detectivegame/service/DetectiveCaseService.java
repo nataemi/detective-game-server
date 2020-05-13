@@ -97,7 +97,7 @@ public class DetectiveCaseService {
         detectiveCaseInfo.setImage(detectiveCaseInfoRequest.getImage());
         detectiveCaseInfo.setMaxDays(detectiveCaseInfoRequest.getMaxDays());
         detectiveCaseInfo.setMpPerDay(detectiveCaseInfo.getMpPerDay());
-        detectiveCaseInfo.setBgnDate(new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()));
+        detectiveCaseInfo.setBgnDate(detectiveCaseInfoRequest.getBgnDt() == null ? null :new Timestamp(detectiveCaseInfoRequest.getBgnDt().getTime()));
         detectiveCaseInfo.setDescription(detectiveCaseInfoRequest.getDescription());
         detectiveCaseInfo.setReady(detectiveCaseInfoRequest.isReady());
         detectiveCaseInfo.setFrstActionId(detectiveCaseInfoRequest.getFrstActionId());
