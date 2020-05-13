@@ -32,5 +32,5 @@ public class DetectiveCaseInfoResponse {
     private Date bgnDt;
 
     @JsonProperty(value = "frst_action_id")
-    private long frstActionId;
+    private Long frstActionId;
 }
