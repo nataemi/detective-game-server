@@ -38,6 +38,9 @@ public class ActionService {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    DetectiveCaseService detectiveCaseService;
+
 
     public void deleteAction(ActionPayload actionPayload) {
         pl.detectivegame.model.DAO.Action actionDAO = getActionDAOWithId(actionPayload);
@@ -78,13 +81,50 @@ public class ActionService {
     public ActionPayload createAction(ActionPayload actionPayload) {
         pl.detectivegame.model.DAO.Action actionDAO = getActionDAO(actionPayload);
         actionDAO = actionRepository.save(actionDAO);
+        addActionActionIfIsRevealed(actionPayload, actionDAO);
         actionPayload.setAction(ActionMapper.map(actionDAO));
         return actionPayload;
+    }
+
+    public void addActionActionIfIsRevealed(ActionPayload actionPayload, pl.detectivegame.model.DAO.Action actionDAO) {
+        if(actionPayload.getAction().isRevealed()){
+            long frstActionId = detectiveCaseService.getFrstActionId(actionDAO.getCaseId());
+            ActionAction actionAction = ActionAction.builder()
+                    .actionActionIdentity(
+                            ActionActionIdentity.builder()
+                            .actionId(frstActionId)
+                            .revealedId(actionDAO.getActionId())
+                            .build()
+                    )
+                    .build();
+            actionActionRepository.save(actionAction);
+        }
+    }
+
+    public void modifyActionAction(ActionPayload actionPayload, pl.detectivegame.model.DAO.Action actionDAO) {
+        addActionActionIfIsRevealed(actionPayload, actionDAO);
+        deleteActionActionIfIsNotRevealed(actionPayload,actionDAO);
+    }
+
+    private void deleteActionActionIfIsNotRevealed(ActionPayload actionPayload, pl.detectivegame.model.DAO.Action actionDAO) {
+        if (!actionPayload.getAction().isRevealed()) {
+            long frstActionId = detectiveCaseService.getFrstActionId(actionDAO.getCaseId());
+            ActionAction actionAction = ActionAction.builder()
+                    .actionActionIdentity(
+                            ActionActionIdentity.builder()
+                                    .actionId(frstActionId)
+                                    .revealedId(actionDAO.getActionId())
+                                    .build()
+                    )
+                    .build();
+            actionActionRepository.delete(actionAction);
+        }
     }
 
     public ActionPayload updateAction(ActionPayload actionPayload) {
         pl.detectivegame.model.DAO.Action actionDAO = updateActionInfo(actionPayload);
         actionDAO = actionRepository.save(actionDAO);
+        modifyActionAction(actionPayload, actionDAO);
         List<Successor> successors = actionPayload.getAction().getSuccessors();
         Long actionId = actionDAO.getActionId();
         updateSuccesors(successors, actionId);
@@ -155,39 +195,41 @@ public class ActionService {
     }
 
     private void convertSuccesorsToDAOs(List<Successor> successors, Long actionId, List<ActionAction> actionActions, List<ActionItem> actionItemList, List<ActionLocation> actionLocationList) {
-        for (Successor successor : successors) {
-            if (SuccessorType.LOCATIONS.getValue().equals(successor.getType())) {
-                actionLocationList.add(
-                        ActionLocation.builder()
-                                .actionLocationIdentity(
-                                        ActionLocationIdentity
-                                                .builder()
-                                                .actionId(actionId)
-                                                .locationId(successor.getId())
-                                                .build())
-                                .build());
-            }
-            if (SuccessorType.PEOPLE.getValue().equals(successor.getType()) || SuccessorType.ITEMS.getValue().equals(successor.getType())) {
-                actionItemList.add(
-                        ActionItem.builder()
-                                .actionItemIdentity(
-                                        ActionItemIdentity
-                                                .builder()
-                                                .actionId(actionId)
-                                                .itemId(successor.getId())
-                                                .build())
-                                .build());
-            }
-            if (SuccessorType.ACTIONS.getValue().equals(successor.getType())) {
-                actionActions.add(
-                        ActionAction.builder()
-                                .actionActionIdentity(
-                                        ActionActionIdentity
-                                                .builder()
-                                                .actionId(actionId)
-                                                .revealedId(successor.getId())
-                                                .build())
-                                .build());
+        if(successors != null) {
+            for (Successor successor : successors) {
+                if (SuccessorType.LOCATIONS.getValue().equals(successor.getType())) {
+                    actionLocationList.add(
+                            ActionLocation.builder()
+                                    .actionLocationIdentity(
+                                            ActionLocationIdentity
+                                                    .builder()
+                                                    .actionId(actionId)
+                                                    .locationId(successor.getId())
+                                                    .build())
+                                    .build());
+                }
+                if (SuccessorType.PEOPLE.getValue().equals(successor.getType()) || SuccessorType.ITEMS.getValue().equals(successor.getType())) {
+                    actionItemList.add(
+                            ActionItem.builder()
+                                    .actionItemIdentity(
+                                            ActionItemIdentity
+                                                    .builder()
+                                                    .actionId(actionId)
+                                                    .itemId(successor.getId())
+                                                    .build())
+                                    .build());
+                }
+                if (SuccessorType.ACTIONS.getValue().equals(successor.getType())) {
+                    actionActions.add(
+                            ActionAction.builder()
+                                    .actionActionIdentity(
+                                            ActionActionIdentity
+                                                    .builder()
+                                                    .actionId(actionId)
+                                                    .revealedId(successor.getId())
+                                                    .build())
+                                    .build());
+                }
             }
         }
     }

@@ -13,4 +13,6 @@ public interface ActionActionRepository extends JpaRepository<ActionAction,Long>
     List<ActionAction> findAllByActionActionIdentity_ActionIdOrActionActionIdentity_RevealedId(Long actionId, Long revealedId);
 
     List<ActionAction> findAllByActionActionIdentity_ActionId(Long actionId);
+
+    List<ActionAction> findAllByActionActionIdentity_ActionIdAndActionActionIdentity_RevealedId(Long actionId, Long revealedId);
 }

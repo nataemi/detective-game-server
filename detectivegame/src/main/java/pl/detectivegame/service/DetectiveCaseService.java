@@ -240,4 +240,9 @@ public class DetectiveCaseService {
         return responseList;
     }
 
+    public long getFrstActionId(long detectiveCaseId){
+        DetectiveCaseInfo detectiveCaseInfo = detectiveCaseInfoRepository.getOne(detectiveCaseId);
+        return detectiveCaseInfo.getFrstActionId();
+    }
+
 }
